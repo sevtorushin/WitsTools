@@ -3,11 +3,11 @@ package filters;
 import java.util.Arrays;
 import java.util.List;
 
-public class TimeBasedPackageFilter {
+public class TimeBasedItemFilter {
 
     private List<String> items;
 
-    public TimeBasedPackageFilter(String... items) {
+    public TimeBasedItemFilter(String... items) {
         this.items = List.of(items);
     }
 

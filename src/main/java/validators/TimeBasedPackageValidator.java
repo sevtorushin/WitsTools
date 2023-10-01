@@ -13,7 +13,7 @@ public class TimeBasedPackageValidator {
         return true;
     }
 
-    public boolean validateValue(String witsPackage) {
+    public boolean validateValue(String witsPackage) throws WitsPackageException {
         String[] tokens = witsPackage.split("\r?\n|\r");
         String value;
         int item;
@@ -24,7 +24,7 @@ public class TimeBasedPackageValidator {
             if (item > 8) {
                 isValid = value.matches("-?\\d+\\.?\\d*?");
                 if (!isValid)
-                    return false;
+                    throw new WitsPackageException("Invalid value for item " + item + " value: " + value);
             }
         }
         return true;
