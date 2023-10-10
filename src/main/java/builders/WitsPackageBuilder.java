@@ -1,24 +1,26 @@
-package filters;
+package builders;
 
 import descriptions.TimeBasedDescription;
-import generators.TimeBasedGenerator;
+import generators.wits.WitsGenerator;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class TimeBasedBuilder {
-    private final String packageNumber = TimeBasedDescription.WELL_IDENTIFIER.getRecordNumber();
+public class WitsPackageBuilder {
+    private final String packageNumber;
     private final Map<String, String> map = new TreeMap<>(String::compareTo);
-    private final TimeBasedGenerator generator;
+    private final WitsGenerator generator;
 
-    public TimeBasedBuilder(TimeBasedGenerator generator) {
+    public WitsPackageBuilder(String packageNumber, WitsGenerator generator) {
+        this.packageNumber = packageNumber;
         this.generator = generator;
         Arrays.stream(TimeBasedDescription.values()).forEach(td -> map.put(td.getItem(), "0"));
     }
 
-    public TimeBasedBuilder(TimeBasedGenerator generator, String... items) {
+    public WitsPackageBuilder(String packageNumber, WitsGenerator generator, String... items) {
+        this.packageNumber = packageNumber;
         this.generator = generator;
         Arrays.stream(items).forEach(s -> map.put(s, "0"));
     }
@@ -45,5 +47,17 @@ public class TimeBasedBuilder {
                 e.printStackTrace();
             }
         });
+    }
+
+    public String getPackageNumber() {
+        return packageNumber;
+    }
+
+    public Map<String, String> getMap() {
+        return map;
+    }
+
+    public WitsGenerator getGenerator() {
+        return generator;
     }
 }

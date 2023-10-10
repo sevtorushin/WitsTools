@@ -1,5 +1,6 @@
 package generators;
 
+import descriptions.TimeBasedDescription;
 import generators.functions.FunctionImpl;
 
 public class ValueGenerator {
@@ -7,15 +8,19 @@ public class ValueGenerator {
     private double value;
     private FunctionImpl<Double, Double> function;
 
-    public ValueGenerator(String item, double initValue, FunctionImpl<Double, Double> function) {
-        this.item = item;
+    public ValueGenerator(TimeBasedDescription description, double initValue, FunctionImpl<Double, Double> function) {
+        this.item = description.getItem();
         this.value = initValue;
         this.function = function;
     }
 
-    public Double buildNextValue(){
+    public Double nextDependentOnPrevValue(){
         value = function.apply(value);
         return value;
+    }
+
+    public Double nextIndependentValue(){
+        return function.apply(value);
     }
 
     public String getItem() {
