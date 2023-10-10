@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class TimeBasedBuilder {
-    private String packageNumber = "01";
-    private TimeBasedGenerator generator;
-    private Map<String, String> map = new TreeMap<>(String::compareTo);
+    private final String packageNumber = TimeBasedDescription.WELL_IDENTIFIER.getRecordNumber();
+    private final Map<String, String> map = new TreeMap<>(String::compareTo);
+    private final TimeBasedGenerator generator;
 
     public TimeBasedBuilder(TimeBasedGenerator generator) {
         this.generator = generator;
