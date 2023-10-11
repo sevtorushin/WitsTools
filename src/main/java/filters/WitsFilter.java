@@ -1,11 +1,13 @@
 package filters;
 
-public class WitsFilter {
+public class WitsFilter implements Filter {
 
-    public boolean isWits(String witsPackage) {
+    public String filtrate(String witsPackage) {
         boolean isWitsHeader = witsPackage.startsWith("&&");
         boolean isWitsFooter = witsPackage.endsWith("!!");
-
-        return isWitsHeader && isWitsFooter;
+        if (isWitsHeader && isWitsFooter)
+            return witsPackage;
+        else
+            return null;
     }
 }

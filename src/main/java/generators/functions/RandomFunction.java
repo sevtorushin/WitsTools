@@ -6,8 +6,8 @@ public class RandomFunction implements FunctionImpl<Double, Double> {
 
     private double maxVariation;
 
-    public RandomFunction(double maxVariation) {
-        this.maxVariation = maxVariation;
+    public RandomFunction(double maxDeviation) {
+        this.maxVariation = maxDeviation;
     }
 
     /**
