@@ -1,6 +1,6 @@
 package descriptions;
 
-public enum TimeBasedDescription {
+public enum TimeBasedDescription implements WitsDescription{
     WELL_IDENTIFIER("01", "WID"),
     HOLE_SECT_NO("02", "SKNO"),
     RECORD_IDENTIFIER("03", "RID"),
@@ -48,7 +48,7 @@ public enum TimeBasedDescription {
     SPARE5("45", "SPR5")
     ;
 
-    String recordNumber;
+    String recordNumber = "01";
     String item;
     String mnemonic;
 
@@ -58,7 +58,7 @@ public enum TimeBasedDescription {
     }
 
     public String getRecordNumber() {
-        return "01";
+        return recordNumber;
     }
 
     public String getItem() {
