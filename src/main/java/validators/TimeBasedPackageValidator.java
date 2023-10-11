@@ -13,7 +13,7 @@ public class TimeBasedPackageValidator {
         return true;
     }
 
-    public boolean validateValue(String witsPackage) throws WitsPackageException {
+    public boolean validateNumberValue(String witsPackage) throws WitsPackageException {
         String[] tokens = witsPackage.split("\r?\n|\r");
         String value;
         int item;
