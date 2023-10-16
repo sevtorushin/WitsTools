@@ -1,5 +1,8 @@
 package parsers;
 
+import exceptions.WitsPackageException;
+import validators.RecordValidator;
+
 public class MwdEvaluationParser extends WitsPackageParser {
 
     public Double getGammaMD(String witsPackage) {

@@ -1,5 +1,10 @@
 package parsers;
 
+import exceptions.WitsPackageException;
+import validators.RecordValidator;
+
+import java.util.Map;
+
 public class TimeBasedParser extends WitsPackageParser {
 
     public Double getBitDepth(String witsPackage) {

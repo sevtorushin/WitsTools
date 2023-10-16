@@ -1,6 +1,6 @@
 package descriptions;
 
-public enum TimeBasedDescription implements WitsDescription{
+public enum TimeBasedDescription {
     WELL_IDENTIFIER("01", "WID"),
     HOLE_SECT_NO("02", "SKNO"),
     RECORD_IDENTIFIER("03", "RID"),

@@ -2,7 +2,7 @@ package validators;
 
 import exceptions.WitsPackageException;
 
-public class TimeBasedPackageValidator {
+public class TimeBasedPackageValidator implements Validator{
 
     public boolean validatePackageNumber(String witsPackage) {
         String[] tokens = witsPackage.split("\r?\n|\r");
@@ -28,5 +28,10 @@ public class TimeBasedPackageValidator {
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean isValid(String data) {
+        return false;
     }
 }

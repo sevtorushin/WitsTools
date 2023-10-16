@@ -25,6 +25,7 @@
 
         <!-- testing properties-->
         <junit.jupiter.api.version>5.9.3</junit.jupiter.api.version>
+        <junit.jupiter.params.version>5.8.2</junit.jupiter.params.version>
     </properties>
 
 
@@ -68,6 +69,15 @@
             <version>${junit.jupiter.api.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.jupiter.params.version}</version>
+            <scope>test</scope>
+        </dependency>
+
 
 
 
