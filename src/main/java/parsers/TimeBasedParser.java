@@ -1,11 +1,13 @@
 package parsers;
 
-import exceptions.WitsPackageException;
-import validators.RecordValidator;
-
-import java.util.Map;
-
 public class TimeBasedParser extends WitsPackageParser {
+
+    public TimeBasedParser() {
+    }
+
+    public TimeBasedParser(Splitter<String, String> recordSplitter, Splitter<String, String> packageSplitter) {
+        super(recordSplitter, packageSplitter);
+    }
 
     public Double getBitDepth(String witsPackage) {
         return getValue(witsPackage, "08") != null ? Double.parseDouble(getValue(witsPackage, "08")) : null;
