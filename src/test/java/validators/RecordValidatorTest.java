@@ -19,7 +19,7 @@ class RecordValidatorTest {
 
     @BeforeAll
     public static void set(){
-        recordNumber = TimeBasedDescription.WELL_IDENTIFIER.getRecordNumber();
+        recordNumber = TimeBasedDescription.WELL_IDENTIFIER.getPackageNumber();
         itemSet = Arrays.stream(TimeBasedDescription.values()).map(TimeBasedDescription::getItem).collect(Collectors.toSet());
     }
 
@@ -45,7 +45,7 @@ class RecordValidatorTest {
     @ParameterizedTest
     @MethodSource("methodDataProvider")
     void getPackageNumber(String data, boolean isValid, String packageNumber, Set<String> itemSet) {
-        Validator recordValidator = new RecordValidator(packageNumber, itemSet);
+        Validator recordValidator = new TimeBasedPackageValidator();
         Assertions.assertEquals(isValid, recordValidator.isValid(data));
     }
 }

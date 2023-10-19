@@ -48,7 +48,7 @@ public enum TimeBasedDescription {
     SPARE5("45", "SPR5")
     ;
 
-    String recordNumber = "01";
+    String packageNumber = "01";
     String item;
     String mnemonic;
 
@@ -57,8 +57,8 @@ public enum TimeBasedDescription {
         this.mnemonic = mnemonic;
     }
 
-    public String getRecordNumber() {
-        return recordNumber;
+    public String getPackageNumber() {
+        return packageNumber;
     }
 
     public String getItem() {

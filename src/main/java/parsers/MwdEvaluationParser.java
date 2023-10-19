@@ -1,9 +1,12 @@
 package parsers;
 
 import exceptions.WitsPackageException;
-import validators.RecordValidator;
 
 public class MwdEvaluationParser extends WitsPackageParser {
+
+    public MwdEvaluationParser() {
+        super(new RecordSplitter(), new PackageSplitter("\\r?\\n|\\r"));
+    }
 
     public Double getGammaMD(String witsPackage) {
         return getValue(witsPackage, "21") != null ? Double.parseDouble(getValue(witsPackage, "21")) : null;

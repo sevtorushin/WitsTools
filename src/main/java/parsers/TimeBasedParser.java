@@ -3,6 +3,7 @@ package parsers;
 public class TimeBasedParser extends WitsPackageParser {
 
     public TimeBasedParser() {
+        super(new RecordSplitter(), new PackageSplitter("\\r?\\n|\\r"));
     }
 
     public TimeBasedParser(Splitter<String, String> recordSplitter, Splitter<String, String> packageSplitter) {

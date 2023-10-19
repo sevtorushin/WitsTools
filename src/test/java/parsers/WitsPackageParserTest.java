@@ -28,7 +28,7 @@ class WitsPackageParserTest {
 
     @BeforeAll
     static void setWitsPackageParser(){
-        witsPackageParser = new WitsPackageParser();
+        witsPackageParser = new TimeBasedParser();
     }
 
     static Stream<Arguments> methodPackNumDataProvider() {

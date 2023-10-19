@@ -7,10 +7,6 @@ public class PackageSplitter implements Splitter<String, String>{
         this.lineFeedPattern = lineFeedPattern;
     }
 
-    public PackageSplitter() {
-        this.lineFeedPattern = "\\r?\\n|\\r";
-    }
-
     @Override
     public String[] split(String data) {
         return data.split(lineFeedPattern);

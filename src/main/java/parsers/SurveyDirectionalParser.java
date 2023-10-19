@@ -1,9 +1,12 @@
 package parsers;
 
 import exceptions.WitsPackageException;
-import validators.RecordValidator;
 
 public class SurveyDirectionalParser extends WitsPackageParser {
+
+    public SurveyDirectionalParser() {
+        super(new RecordSplitter(), new PackageSplitter("\\r?\\n|\\r"));
+    }
 
     public Double getSurveyMD(String witsPackage) {
         return getValue(witsPackage, "08") != null ? Double.parseDouble(getValue(witsPackage, "08")) : null;

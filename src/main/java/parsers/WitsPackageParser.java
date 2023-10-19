@@ -4,14 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class WitsPackageParser {
+abstract class WitsPackageParser {
     private Splitter<String, String> recordSplitter;
     private Splitter<String, String> packageSplitter;
-
-    public WitsPackageParser() {
-        this.recordSplitter = new RecordSplitter();
-        this.packageSplitter = new PackageSplitter();
-    }
 
     public WitsPackageParser(Splitter<String, String> recordSplitter, Splitter<String, String> packageSplitter) {
         this.recordSplitter = recordSplitter;

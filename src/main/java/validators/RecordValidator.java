@@ -9,16 +9,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Set;
 
-public class RecordValidator implements Validator {
+abstract class RecordValidator implements Validator {
     private final String packageNumber;
     private final Set<String> itemSet;
     private Splitter<String, String> recordSplitter;
-
-    public RecordValidator(String packageNumber, Set<String> itemSet) {
-        this.packageNumber = packageNumber;
-        this.itemSet = itemSet;
-        this.recordSplitter = new RecordSplitter();
-    }
 
     public RecordValidator(String packageNumber, Set<String> itemSet, RecordSplitter recordSplitter) {
         this.packageNumber = packageNumber;
@@ -26,18 +20,29 @@ public class RecordValidator implements Validator {
         this.recordSplitter = recordSplitter;
     }
 
+    abstract boolean isValidSpecificValue(String item, String value);
+
     @Override
-    public boolean isValid(String data) {
-        String[] tockens = recordSplitter.split(data);
-        String packageNumber = tockens[0];
-        String item = tockens[1];
-        String value = tockens[2];
+    public boolean isValid(String record) {
+        String[] tokens = recordSplitter.split(record);
+        String packageNumber = tokens[0];
+        String item = tokens[1];
+        String value = tokens[2];
         boolean isValidPackageNumber = packageNumber.equals(this.packageNumber);
         boolean isValidItem = itemSet.contains(item);
         boolean isValidValue;
         switch (item) {
             case "01":
                 isValidValue = true;
+                break;
+            case "02":
+                isValidValue = isNumber(value);
+                break;
+            case "03":
+                isValidValue = isNumber(value);
+                break;
+            case "04":
+                isValidValue = isNumber(value);
                 break;
             case "05":
                 isValidValue = isDate(value);
@@ -49,13 +54,13 @@ public class RecordValidator implements Validator {
                 isValidValue = isNumber(value) && Integer.parseInt(value) > 0 && Integer.parseInt(value) < 34;
                 break;
             default:
-                isValidValue = isNumber(value);
+                isValidValue = isValidSpecificValue(item, value);
                 break;
         }
         return isValidPackageNumber && isValidItem && isValidValue;
     }
 
-    private boolean isNumber(String value) {
+    boolean isNumber(String value) {
         return value.matches("-?\\d+\\.?\\d*?");
     }
 
@@ -69,7 +74,7 @@ public class RecordValidator implements Validator {
         }
     }
 
-    private boolean isTime(String value) {
+    boolean isTime(String value) {
         String pattern = "HHmmss";
         try {
             LocalTime.parse(value, DateTimeFormatter.ofPattern(pattern));
