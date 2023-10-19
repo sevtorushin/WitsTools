@@ -17,7 +17,7 @@ class TimeBasedRecordValidator extends RecordValidator {
         packageNumber = TimeBasedDescription.WELL_IDENTIFIER.getPackageNumber();
     }
 
-    public TimeBasedRecordValidator() {
+    TimeBasedRecordValidator() {
         super(packageNumber, items, new RecordSplitter(2, 2));
     }
 

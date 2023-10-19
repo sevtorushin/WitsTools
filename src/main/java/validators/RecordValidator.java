@@ -14,7 +14,7 @@ abstract class RecordValidator implements Validator {
     private final Set<String> itemSet;
     private Splitter<String, String> recordSplitter;
 
-    public RecordValidator(String packageNumber, Set<String> itemSet, RecordSplitter recordSplitter) {
+    RecordValidator(String packageNumber, Set<String> itemSet, RecordSplitter recordSplitter) {
         this.packageNumber = packageNumber;
         this.itemSet = itemSet;
         this.recordSplitter = recordSplitter;
@@ -64,7 +64,7 @@ abstract class RecordValidator implements Validator {
         return value.matches("-?\\d+\\.?\\d*?");
     }
 
-    private boolean isDate(String value) {
+    boolean isDate(String value) {
         String pattern = "yyMMdd";
         try {
             LocalDate.parse(value, DateTimeFormatter.ofPattern(pattern));
@@ -84,19 +84,19 @@ abstract class RecordValidator implements Validator {
         }
     }
 
-    public String getPackageNumber() {
+    String getPackageNumber() {
         return packageNumber;
     }
 
-    public Set<String> getItemSet() {
+    Set<String> getItemSet() {
         return itemSet;
     }
 
-    public Splitter<String, String> getRecordSplitter() {
+    Splitter<String, String> getRecordSplitter() {
         return recordSplitter;
     }
 
-    public void setRecordSplitter(Splitter<String, String> recordSplitter) {
+    void setRecordSplitter(Splitter<String, String> recordSplitter) {
         this.recordSplitter = recordSplitter;
     }
 }
