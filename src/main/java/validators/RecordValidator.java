@@ -61,7 +61,10 @@ abstract class RecordValidator implements Validator {
     }
 
     boolean isNumber(String value) {
-        return value.matches("-?\\d+\\.?\\d*?");
+        String numberRegexp = "-?\\d+\\.?\\d*?";
+        String eNumberRegexp = "-?\\d+\\.?\\d*?e-\\d+";
+        return value.matches(numberRegexp) ||
+                value.matches(eNumberRegexp);
     }
 
     boolean isDate(String value) {

@@ -2,7 +2,7 @@ package validators;
 
 import parsers.PackageSplitter;
 
-abstract class PackageValidator implements Validator{
+abstract class PackageValidator implements Validator {
     private RecordValidator recordValidator;
     private PackageSplitter packageSplitter;
 
@@ -14,10 +14,13 @@ abstract class PackageValidator implements Validator{
     @Override
     public boolean isValid(String witsPackage) {
         String[] records = packageSplitter.split(witsPackage);
-        for (int i = 1; i < records.length - 1; i++) {
-            if (!recordValidator.isValid(records[i]))
-                return false;
+        if (!records[0].equals("&&") || !records[records.length - 1].equals("!!")) {
+            throw new IllegalArgumentException("Header or footer package is missing");
         }
+            for (int i = 1; i < records.length - 1; i++) {
+                if (!recordValidator.isValid(records[i]))
+                    return false;
+            }
         return true;
     }
 }
