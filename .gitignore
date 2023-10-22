@@ -1,4 +1,7 @@
-/src/main/resources/data/
+/src/main/resources/data
+/src/main/resources/temp
 /src/main/java/Main.java
-/target/
-/src/main/resources/temp/
+/target
+/out
+.idea
+.class
