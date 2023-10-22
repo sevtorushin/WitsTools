@@ -23,4 +23,20 @@ abstract class PackageValidator implements Validator {
             }
         return true;
     }
+
+    public RecordValidator getRecordValidator() {
+        return recordValidator;
+    }
+
+    public void setRecordValidator(RecordValidator recordValidator) {
+        this.recordValidator = recordValidator;
+    }
+
+    public PackageSplitter getPackageSplitter() {
+        return packageSplitter;
+    }
+
+    public void setPackageSplitter(PackageSplitter packageSplitter) {
+        this.packageSplitter = packageSplitter;
+    }
 }
