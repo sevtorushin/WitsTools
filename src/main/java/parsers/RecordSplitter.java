@@ -1,5 +1,7 @@
 package parsers;
 
+import exceptions.WitsPackageParseException;
+
 public class RecordSplitter implements Splitter<String, String>{
     private int packageNumberLength;
     private int itemLength;
@@ -28,6 +30,8 @@ public class RecordSplitter implements Splitter<String, String>{
 
     @Override
     public String[] split(String data) {
+        if (data.length() < packageNumberLength + itemLength)
+            throw new IllegalArgumentException("Not enough record arguments: " + data);
         return new String[]{getPackageNumber(data), getItem(data), getValue(data)};
     }
 

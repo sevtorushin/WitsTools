@@ -1,22 +1,28 @@
 package parsers;
 
+import annotation.Item;
+import annotation.Package;
 import exceptions.WitsPackageException;
 
+@Package(number = "08")
 public class MwdEvaluationParser extends WitsPackageParser {
 
     public MwdEvaluationParser() {
-        super(new RecordSplitter(), new PackageSplitter("\\r?\\n|\\r"));
+        super("08", new RecordSplitter(), new PackageSplitter("\\r?\\n|\\r"));
     }
 
-    public Double getGammaMD(String witsPackage) {
-        return getValue(witsPackage, "21") != null ? Double.parseDouble(getValue(witsPackage, "21")) : null;
+    @Item(number = "21")
+    public Double getGammaMD(String witsPackage) throws WitsPackageException {
+        return getDoubleValue("21");
     }
 
-    public Double getGammaRaw(String witsPackage) {
-        return getValue(witsPackage, "23") != null ? Double.parseDouble(getValue(witsPackage, "23")) : null;
+    @Item(number = "23")
+    public Double getGammaRaw(String witsPackage) throws WitsPackageException {
+        return getDoubleValue("23");
     }
 
-    public Double getGammaCorr(String witsPackage) {
-        return getValue(witsPackage, "24") != null ? Double.parseDouble(getValue(witsPackage, "24")) : null;
+    @Item(number = "24")
+    public Double getGammaCorr(String witsPackage) throws WitsPackageException {
+        return getDoubleValue("24");
     }
 }

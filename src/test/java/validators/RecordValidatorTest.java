@@ -45,7 +45,7 @@ class RecordValidatorTest {
     @ParameterizedTest
     @MethodSource("methodDataProvider")
     void getPackageNumber(String data, boolean isValid, String packageNumber, Set<String> itemSet) {
-        Validator recordValidator = new TimeBasedPackageValidator();
+        TimeBasedPackageValidator recordValidator = new TimeBasedPackageValidator();
         Assertions.assertEquals(isValid, recordValidator.isValid(data));
     }
 }

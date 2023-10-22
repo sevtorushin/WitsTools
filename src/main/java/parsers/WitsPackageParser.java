@@ -1,63 +1,112 @@
 package parsers;
 
+import annotation.Item;
+import exceptions.WitsPackageParseException;
+import exceptions.WitsPackageException;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.HashMap;
+import java.util.Map;
 
-abstract class WitsPackageParser {
+public abstract class WitsPackageParser {
     private Splitter<String, String> recordSplitter;
     private Splitter<String, String> packageSplitter;
+    private String packageNumber;
+    private Map<String, String> map = new HashMap<>();
 
-    public WitsPackageParser(Splitter<String, String> recordSplitter, Splitter<String, String> packageSplitter) {
+    public WitsPackageParser(String packageNumber, Splitter<String, String> recordSplitter, Splitter<String, String> packageSplitter) {
         this.recordSplitter = recordSplitter;
         this.packageSplitter = packageSplitter;
+        this.packageNumber = packageNumber;
     }
 
-    public String getValue(String witsPackage, String item) {
+    public WitsPackageParser parse(String witsPackage) throws WitsPackageParseException {
         String[] records = packageSplitter.split(witsPackage);
         String[] tokens;
+        if (!records[0].equals("&&") || !records[records.length - 1].equals("!!"))
+            throw new WitsPackageParseException("Invalid package. Can not find WITS markers (&& or !!)");
         for (int i = 1; i < records.length - 1; i++) {
             tokens = recordSplitter.split(records[i]);
-            if (tokens[1].equals(item))
-                return tokens[2];
+            map.put(tokens[1], tokens[2]);
+            if (!packageNumber.equals(tokens[0]))
+                packageNumber = tokens[0];
         }
+        return this;
+    }
+
+    public Map<String, String> getPackageAsMap() {
+        return new HashMap<>(map);
+    }
+
+    public String getValue(String item) {
+        return map.get(item);
+    }
+
+    public Double getDoubleValue(String item) throws WitsPackageException {
+        String value = getValue(item);
+        if (value != null)
+            try {
+                return Double.parseDouble(value);
+            } catch (NumberFormatException nfe){
+                throw new WitsPackageException("Wrong value: " + value);
+            }
         return null;
     }
 
-    public String getWellId(String witsPackage) {
-        return getValue(witsPackage, "01");
+    @Item(number = "01")
+    public String getWellId() {
+        return getValue("01");
     }
 
-    public String getHoleSectNo(String witsPackage) {
-        return getValue(witsPackage, "02");
+    @Item(number = "02")
+    public String getHoleSectNo() {
+        return getValue("02");
     }
 
-    public String getRecordId(String witsPackage) {
-        return getValue(witsPackage, "03");
+    @Item(number = "03")
+    public String getRecordId() {
+        return getValue("03");
     }
 
-    public String getSeqId(String witsPackage) {
-        return getValue(witsPackage, "04");
+    @Item(number = "04")
+    public String getSeqId() {
+        return getValue("04");
     }
 
-    public LocalDate getDate(String witsPackage) {
+    @Item(number = "05")
+    public LocalDate getDate() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
-        String date = getValue(witsPackage, "05");
+        String date = getValue("05");
         if (date != null)
-            return LocalDate.parse(date, formatter);
-        else return null;
+            try {
+                return LocalDate.parse(date, formatter);
+            } catch (DateTimeParseException pe){
+                System.err.println(pe.getMessage());
+                return null;
+            }
+        return null;
     }
 
-    public LocalTime getTime(String witsPackage) {
+    @Item(number = "06")
+    public LocalTime getTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmmss");
-        String time = getValue(witsPackage, "06");
+        String time = getValue("06");
         if (time != null)
-            return LocalTime.parse(time, formatter);
-        else return null;
+            try {
+                return LocalTime.parse(time, formatter);
+            } catch (DateTimeParseException pe){
+                System.err.println(pe.getMessage());
+                return null;
+            }
+        return null;
     }
 
-    public String getActivCode(String witsPackage) {
-        return getValue(witsPackage, "07");
+    @Item(number = "07")
+    public String getActivCode() {
+        return map.get("07");
     }
 
     public Splitter<String, String> getRecordSplitter() {
@@ -74,5 +123,13 @@ abstract class WitsPackageParser {
 
     public void setPackageSplitter(Splitter<String, String> packageSplitter) {
         this.packageSplitter = packageSplitter;
+    }
+
+    public String getPackageNumber() {
+        return packageNumber;
+    }
+
+    public void setPackageNumber(String packageNumber) {
+        this.packageNumber = packageNumber;
     }
 }

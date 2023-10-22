@@ -1,32 +1,38 @@
 package parsers;
 
+import annotation.Item;
+import annotation.Package;
+import exceptions.WitsPackageException;
+
+@Package(number = "01")
 public class TimeBasedParser extends WitsPackageParser {
 
     public TimeBasedParser() {
-        super(new RecordSplitter(), new PackageSplitter("\\r?\\n|\\r"));
+        super("01", new RecordSplitter(), new PackageSplitter("\\r?\\n|\\n"));
     }
 
-    public TimeBasedParser(Splitter<String, String> recordSplitter, Splitter<String, String> packageSplitter) {
-        super(recordSplitter, packageSplitter);
+    @Item(number = "08")
+    public Double getBitDepth() throws WitsPackageException {
+        return getDoubleValue("08");
     }
 
-    public Double getBitDepth(String witsPackage) {
-        return getValue(witsPackage, "08") != null ? Double.parseDouble(getValue(witsPackage, "08")) : null;
+    @Item(number = "10")
+    public Double getMeasuredDepth() throws WitsPackageException {
+        return getDoubleValue("10");
     }
 
-    public Double getMeasuredDepth(String witsPackage) {
-        return getValue(witsPackage, "10") != null ? Double.parseDouble(getValue(witsPackage, "10")) : null;
+    @Item(number = "12")
+    public Double getBlockPos() throws WitsPackageException {
+        return getDoubleValue("12");
     }
 
-    public Double getBlockPos(String witsPackage) {
-        return getValue(witsPackage, "12") != null ? Double.parseDouble(getValue(witsPackage, "12")) : null;
+    @Item(number = "14")
+    public Double getHKLD() throws WitsPackageException {
+        return getDoubleValue("14");
     }
 
-    public Double getHKLD(String witsPackage) {
-        return getValue(witsPackage, "14") != null ? Double.parseDouble(getValue(witsPackage, "14")) : null;
-    }
-
-    public Double getPressure(String witsPackage) {
-        return getValue(witsPackage, "21") != null ? Double.parseDouble(getValue(witsPackage, "21")) : null;
+    @Item(number = "21")
+    public Double getPressure() throws WitsPackageException {
+        return getDoubleValue("21");
     }
 }

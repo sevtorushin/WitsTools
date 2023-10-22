@@ -1,30 +1,38 @@
 package parsers;
 
+import annotation.Item;
+import annotation.Package;
 import exceptions.WitsPackageException;
 
+@Package(number = "07")
 public class SurveyDirectionalParser extends WitsPackageParser {
 
     public SurveyDirectionalParser() {
-        super(new RecordSplitter(), new PackageSplitter("\\r?\\n|\\r"));
+        super("07", new RecordSplitter(), new PackageSplitter("\\r?\\n|\\r"));
     }
 
-    public Double getSurveyMD(String witsPackage) {
-        return getValue(witsPackage, "08") != null ? Double.parseDouble(getValue(witsPackage, "08")) : null;
+    @Item(number = "08")
+    public Double getSurveyMD(String witsPackage) throws WitsPackageException {
+        return getDoubleValue("08");
     }
 
-    public Double getInclination(String witsPackage) {
-        return getValue(witsPackage, "13") != null ? Double.parseDouble(getValue(witsPackage, "13")) : null;
+    @Item(number = "13")
+    public Double getInclination(String witsPackage) throws WitsPackageException {
+        return getDoubleValue("13");
     }
 
-    public Double getAzimuthCorr(String witsPackage) {
-        return getValue(witsPackage, "15") != null ? Double.parseDouble(getValue(witsPackage, "15")) : null;
+    @Item(number = "15")
+    public Double getAzimuthCorr(String witsPackage) throws WitsPackageException {
+        return getDoubleValue("15");
     }
 
-    public Double getMagneticTF(String witsPackage) {
-        return getValue(witsPackage, "16") != null ? Double.parseDouble(getValue(witsPackage, "16")) : null;
+    @Item(number = "16")
+    public Double getMagneticTF(String witsPackage) throws WitsPackageException {
+        return getDoubleValue("16");
     }
 
-    public Double getGravityTF(String witsPackage) {
-        return getValue(witsPackage, "17") != null ? Double.parseDouble(getValue(witsPackage, "17")) : null;
+    @Item(number = "17")
+    public Double getGravityTF(String witsPackage) throws WitsPackageException {
+        return getDoubleValue("17");
     }
 }
