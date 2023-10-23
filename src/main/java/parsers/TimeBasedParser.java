@@ -8,7 +8,7 @@ import exceptions.WitsPackageException;
 public class TimeBasedParser extends WitsPackageParser {
 
     public TimeBasedParser() {
-        super("01", new RecordSplitter(), new PackageSplitter("\\r?\\n|\\n"));
+        super("01", new RecordSplitter(2, 2), new PackageSplitter("\\r?\\n|\\n"));
     }
 
     @Item(number = "08")

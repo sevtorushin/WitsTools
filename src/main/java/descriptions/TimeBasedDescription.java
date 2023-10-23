@@ -1,6 +1,10 @@
 package descriptions;
 
-public enum TimeBasedDescription {
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+public enum TimeBasedDescription implements WitsDescriptor {
     WELL_IDENTIFIER("01", "WID"),
     HOLE_SECT_NO("02", "SKNO"),
     RECORD_IDENTIFIER("03", "RID"),
@@ -67,5 +71,9 @@ public enum TimeBasedDescription {
 
     public String getMnemonic() {
         return mnemonic;
+    }
+
+    public Set<String> getItemSet(){
+        return Arrays.stream(TimeBasedDescription.values()).map(TimeBasedDescription::getItem).collect(Collectors.toSet());
     }
 }

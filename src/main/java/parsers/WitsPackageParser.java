@@ -23,7 +23,7 @@ public abstract class WitsPackageParser {
         this.packageNumber = packageNumber;
     }
 
-    public WitsPackageParser parse(String witsPackage) throws WitsPackageParseException {
+    public WitsPackageParser parse(String witsPackage) throws WitsPackageException {
         String[] records = packageSplitter.split(witsPackage);
         String[] tokens;
         if (!records[0].equals("&&") || !records[records.length - 1].equals("!!"))
@@ -31,8 +31,8 @@ public abstract class WitsPackageParser {
         for (int i = 1; i < records.length - 1; i++) {
             tokens = recordSplitter.split(records[i]);
             map.put(tokens[1], tokens[2]);
-            if (!packageNumber.equals(tokens[0]))
-                packageNumber = tokens[0];
+            if (!tokens[0].equals(packageNumber))
+                throw new WitsPackageException("Invalid package");
         }
         return this;
     }
@@ -46,6 +46,9 @@ public abstract class WitsPackageParser {
     }
 
     public Double getDoubleValue(String item) throws WitsPackageException {
+        if (Integer.parseInt(item) < 7){
+            throw new IllegalArgumentException("Incorrect argument: " + item + ". Item must be greater than 7");
+        }
         String value = getValue(item);
         if (value != null)
             try {
