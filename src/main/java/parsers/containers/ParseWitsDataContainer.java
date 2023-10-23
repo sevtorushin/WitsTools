@@ -17,6 +17,12 @@ public class ParseWitsDataContainer {
         this.recordSplitter = new RecordSplitter(2, 2);
     }
 
+    public ParseWitsDataContainer(ParseWitsDataContainer container){
+        this.map = new HashMap<>(container.getMap());
+        this.recordSplitter = new RecordSplitter(container.getRecordSplitter().getPackageNumberLength(),
+                container.getRecordSplitter().getItemLength());
+    }
+
     public void put(String packageNumber, String item, String value) {
         map.put(item, new String[]{value, packageNumber});
     }

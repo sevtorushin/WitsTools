@@ -3,46 +3,40 @@ package parsers;
 import annotation.Item;
 import exceptions.WitsPackageParseException;
 import exceptions.WitsPackageException;
+import parsers.containers.ParseWitsDataContainer;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class WitsPackageParser {
-    private Splitter<String, String> recordSplitter;
     private Splitter<String, String> packageSplitter;
     private String packageNumber;
-    private Map<String, String> map = new HashMap<>();
+    private ParseWitsDataContainer container;
 
-    public WitsPackageParser(String packageNumber, Splitter<String, String> recordSplitter, Splitter<String, String> packageSplitter) {
-        this.recordSplitter = recordSplitter;
+    public WitsPackageParser(String packageNumber, RecordSplitter recordSplitter, PackageSplitter packageSplitter) {
         this.packageSplitter = packageSplitter;
         this.packageNumber = packageNumber;
+        this.container = new ParseWitsDataContainer(recordSplitter);
     }
 
     public WitsPackageParser parse(String witsPackage) throws WitsPackageException {
         String[] records = packageSplitter.split(witsPackage);
-        String[] tokens;
-        if (!records[0].equals("&&") || !records[records.length - 1].equals("!!"))
-            throw new WitsPackageParseException("Invalid package. Can not find WITS markers (&& or !!)");
+//        if (!records[0].equals("&&") || !records[records.length - 1].equals("!!"))
+//            throw new WitsPackageParseException("Invalid package. Can not find WITS markers (&& or !!)");
         for (int i = 1; i < records.length - 1; i++) {
-            tokens = recordSplitter.split(records[i]);
-            map.put(tokens[1], tokens[2]);
-            if (!tokens[0].equals(packageNumber))
-                throw new WitsPackageException("Invalid package");
+            container.put(records[i]);
         }
         return this;
     }
 
-    public Map<String, String> getPackageAsMap() {
-        return new HashMap<>(map);
+    public ParseWitsDataContainer getContainer() {
+        return container; //todo сделать копию через конструктор
     }
 
     public String getValue(String item) {
-        return map.get(item);
+        return container.getValue(item);
     }
 
     public Double getDoubleValue(String item) throws WitsPackageException {
@@ -109,15 +103,7 @@ public abstract class WitsPackageParser {
 
     @Item(number = "07")
     public String getActivCode() {
-        return map.get("07");
-    }
-
-    public Splitter<String, String> getRecordSplitter() {
-        return recordSplitter;
-    }
-
-    public void setRecordSplitter(Splitter<String, String> recordSplitter) {
-        this.recordSplitter = recordSplitter;
+        return container.getValue("07");
     }
 
     public Splitter<String, String> getPackageSplitter() {
