@@ -17,7 +17,7 @@ public class ParseWitsDataContainer {
         this.recordSplitter = new RecordSplitter(2, 2);
     }
 
-    public ParseWitsDataContainer(ParseWitsDataContainer container){
+    public ParseWitsDataContainer(ParseWitsDataContainer container) {
         this.map = new HashMap<>(container.getMap());
         this.recordSplitter = new RecordSplitter(container.getRecordSplitter().getPackageNumberLength(),
                 container.getRecordSplitter().getItemLength());
@@ -33,7 +33,11 @@ public class ParseWitsDataContainer {
     }
 
     public String getValue(String item) {
-        return map.get(item)[0];
+        String[] arr = map.get(item);
+        if (arr == null)
+            return null;
+        else
+            return map.get(item)[0];
     }
 
     public void clear() {
