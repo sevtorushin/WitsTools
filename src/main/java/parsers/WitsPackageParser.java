@@ -1,7 +1,6 @@
 package parsers;
 
 import annotation.Item;
-import exceptions.WitsPackageParseException;
 import exceptions.WitsPackageException;
 import parsers.containers.ParseWitsDataContainer;
 
@@ -12,19 +11,16 @@ import java.time.format.DateTimeParseException;
 
 public abstract class WitsPackageParser {
     private Splitter<String, String> packageSplitter;
-    private String packageNumber;
     private ParseWitsDataContainer container;
 
-    public WitsPackageParser(String packageNumber, RecordSplitter recordSplitter, PackageSplitter packageSplitter) {
+    public WitsPackageParser(RecordSplitter recordSplitter, PackageSplitter packageSplitter) {
         this.packageSplitter = packageSplitter;
-        this.packageNumber = packageNumber;
         this.container = new ParseWitsDataContainer(recordSplitter);
     }
 
-    public WitsPackageParser parse(String witsPackage) throws WitsPackageException {
+    public WitsPackageParser parse(String witsPackage) {
+        container.clear();
         String[] records = packageSplitter.split(witsPackage);
-//        if (!records[0].equals("&&") || !records[records.length - 1].equals("!!"))
-//            throw new WitsPackageParseException("Invalid package. Can not find WITS markers (&& or !!)");
         for (int i = 1; i < records.length - 1; i++) {
             container.put(records[i]);
         }
@@ -32,7 +28,7 @@ public abstract class WitsPackageParser {
     }
 
     public ParseWitsDataContainer getContainer() {
-        return container; //todo сделать копию через конструктор
+        return new ParseWitsDataContainer(container);
     }
 
     public String getValue(String item) {
@@ -112,13 +108,5 @@ public abstract class WitsPackageParser {
 
     public void setPackageSplitter(Splitter<String, String> packageSplitter) {
         this.packageSplitter = packageSplitter;
-    }
-
-    public String getPackageNumber() {
-        return packageNumber;
-    }
-
-    public void setPackageNumber(String packageNumber) {
-        this.packageNumber = packageNumber;
     }
 }

@@ -8,7 +8,7 @@ import exceptions.WitsPackageException;
 public class MwdEvaluationParser extends WitsPackageParser {
 
     public MwdEvaluationParser() {
-        super("08", new RecordSplitter(), new PackageSplitter("\\r?\\n|\\r"));
+        super(new RecordSplitter(), new PackageSplitter("\\r?\\n|\\r"));
     }
 
     @Item(number = "21")
