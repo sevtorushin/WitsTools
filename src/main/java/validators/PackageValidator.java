@@ -34,18 +34,16 @@ abstract class PackageValidator implements Validator {
 
     @Override
     public boolean isValid(String witsPackage) {
-        try {
             parser.parse(witsPackage);
-        } catch (WitsPackageException e) {
-            e.printStackTrace();
+            boolean result = false;
+        for (Map.Entry<String, String[]> set : parser.getContainer().getMap().entrySet()) {
+            if (!isCorrect(set.getValue()[1], set.getKey(), set.getValue()[0])) {
+                result = false;
+                return result;
+            }
+            result = true;
         }
-        Map<String, String> mapPack = parser.getPackageAsMap();
-        for (Map.Entry<String, String> set : mapPack.entrySet()) {
-
-        }
-
-
-        return false;
+        return result;
     }
 
     private boolean isCorrect(String packageNumber, String item, String value){
@@ -88,7 +86,7 @@ abstract class PackageValidator implements Validator {
                 value.matches(eNumberRegexp);
     }
 
-    boolean isDate(String value) {
+    private boolean isDate(String value) {
         String pattern = "yyMMdd";
         try {
             LocalDate.parse(value, DateTimeFormatter.ofPattern(pattern));
@@ -98,7 +96,7 @@ abstract class PackageValidator implements Validator {
         }
     }
 
-    boolean isTime(String value) {
+    private boolean isTime(String value) {
         String pattern = "HHmmss";
         try {
             LocalTime.parse(value, DateTimeFormatter.ofPattern(pattern));
