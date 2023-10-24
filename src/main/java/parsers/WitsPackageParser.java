@@ -2,7 +2,9 @@ package parsers;
 
 import annotation.Item;
 import exceptions.WitsPackageException;
+import exceptions.WitsPackageParseException;
 import parsers.containers.ParseWitsDataContainer;
+import validators.PackageValidator;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -12,13 +14,17 @@ import java.time.format.DateTimeParseException;
 public abstract class WitsPackageParser {
     private Splitter<String, String> packageSplitter;
     private ParseWitsDataContainer container;
+    private PackageValidator validator;
 
-    public WitsPackageParser(RecordSplitter recordSplitter, PackageSplitter packageSplitter) {
+    public WitsPackageParser(RecordSplitter recordSplitter, PackageSplitter packageSplitter, PackageValidator validator) {
         this.packageSplitter = packageSplitter;
         this.container = new ParseWitsDataContainer(recordSplitter);
+        this.validator = validator;
     }
 
-    public WitsPackageParser parse(String witsPackage) {
+    public WitsPackageParser parse(String witsPackage) throws WitsPackageParseException {
+        if (!validator.isValid(witsPackage))
+            throw new WitsPackageParseException("Invalid package");
         container.clear();
         String[] records = packageSplitter.split(witsPackage);
         for (int i = 1; i < records.length - 1; i++) {
@@ -36,14 +42,14 @@ public abstract class WitsPackageParser {
     }
 
     public Double getDoubleValue(String item) throws WitsPackageException {
-        if (Integer.parseInt(item) < 7){
+        if (Integer.parseInt(item) < 7) {
             throw new IllegalArgumentException("Incorrect argument: " + item + ". Item must be greater than 7");
         }
         String value = getValue(item);
         if (value != null)
             try {
                 return Double.parseDouble(value);
-            } catch (NumberFormatException nfe){
+            } catch (NumberFormatException nfe) {
                 throw new WitsPackageException("Wrong value: " + value);
             }
         return null;
@@ -76,7 +82,7 @@ public abstract class WitsPackageParser {
         if (date != null)
             try {
                 return LocalDate.parse(date, formatter);
-            } catch (DateTimeParseException pe){
+            } catch (DateTimeParseException pe) {
                 System.err.println(pe.getMessage());
                 return null;
             }
@@ -90,7 +96,7 @@ public abstract class WitsPackageParser {
         if (time != null)
             try {
                 return LocalTime.parse(time, formatter);
-            } catch (DateTimeParseException pe){
+            } catch (DateTimeParseException pe) {
                 System.err.println(pe.getMessage());
                 return null;
             }

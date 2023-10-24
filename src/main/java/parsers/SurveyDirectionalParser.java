@@ -8,7 +8,7 @@ import exceptions.WitsPackageException;
 public class SurveyDirectionalParser extends WitsPackageParser {
 
     public SurveyDirectionalParser() {
-        super(new RecordSplitter(), new PackageSplitter("\\r?\\n|\\r"));
+        super(new RecordSplitter(), new PackageSplitter("\\r?\\n|\\r"), null); //todo убрать Null
     }
 
     @Item(number = "08")

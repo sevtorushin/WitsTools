@@ -1,8 +1,11 @@
 package validators;
 
+import descriptions.WitsDescriptor;
 import parsers.RecordSplitter;
 import parsers.Splitter;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -10,14 +13,20 @@ import java.time.format.DateTimeParseException;
 import java.util.Set;
 
 abstract class RecordValidator implements Validator {
-    private final String packageNumber;
-    private final Set<String> itemSet;
+    private String packageNumber;
+    private Set<String> itemSet;
     private Splitter<String, String> recordSplitter;
 
-    RecordValidator(String packageNumber, Set<String> itemSet, RecordSplitter recordSplitter) {
-        this.packageNumber = packageNumber;
-        this.itemSet = itemSet;
+    RecordValidator(Class<? extends WitsDescriptor> descriptorClass, RecordSplitter recordSplitter) {
         this.recordSplitter = recordSplitter;
+        try {
+            Method getPackageNumber = descriptorClass.getMethod("getPackageNumber");
+            this.packageNumber = (String) getPackageNumber.invoke(descriptorClass.getEnumConstants()[0]);
+            Method getItemSet = descriptorClass.getDeclaredMethod("getItemSet");
+            this.itemSet = (Set<String>) getItemSet.invoke(descriptorClass.getEnumConstants()[0]);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     abstract boolean isValidSpecificValue(String item, String value);
