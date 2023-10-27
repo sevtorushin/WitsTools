@@ -69,8 +69,9 @@ public abstract class RecordValidator extends WitsValidator {
                 break;
             case "07":
                 if (!isNumber(value))
+                    throw new WitsValidationException("Activity code should be number: " + value);
+                if (!(isValidValue = Integer.parseInt(value) > 0 && Integer.parseInt(value) < 34))
                     throw new WitsValidationException("Invalid activity code: " + value);
-                isValidValue = Integer.parseInt(value) > 0 && Integer.parseInt(value) < 34;
                 break;
             default:
                 isValidValue = isValidSpecificValue(item, value);

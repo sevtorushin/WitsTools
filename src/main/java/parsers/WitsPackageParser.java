@@ -3,9 +3,9 @@ package parsers;
 import annotation.Item;
 import exceptions.WitsPackageException;
 import exceptions.WitsPackageParseException;
+import exceptions.WitsParseException;
 import parsers.containers.ParseWitsPackageDataContainer;
 import parsers.splitters.PackageSplitter;
-import parsers.splitters.RecordSplitter;
 import parsers.splitters.Splitter;
 import validators.PackageValidator;
 
@@ -14,24 +14,24 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public abstract class WitsPackageParser {
+public abstract class WitsPackageParser implements Parser<WitsPackageParser, String>{
     private Splitter<String, String> packageSplitter;
     private ParseWitsPackageDataContainer container;
     private PackageValidator validator;
 
-    public WitsPackageParser(RecordSplitter recordSplitter, PackageSplitter packageSplitter, PackageValidator validator) {
+    public WitsPackageParser(WitsRecordParser recordParser, PackageSplitter packageSplitter, PackageValidator validator) {
         this.packageSplitter = packageSplitter;
-        this.container = new ParseWitsPackageDataContainer(recordSplitter);
+        this.container = new ParseWitsPackageDataContainer(recordParser);
         this.validator = validator;
     }
 
-    public WitsPackageParser parse(String witsPackage) throws WitsPackageParseException {
-        if (!validator.isValid(witsPackage))
+    public WitsPackageParser parse(String witsPackage) throws WitsParseException {
+        if (!validator.isValid(witsPackage))    //todo двойная валидация данных тут
             throw new WitsPackageParseException("Invalid package");
         container.clear();
         String[] records = packageSplitter.split(witsPackage);
         for (int i = 1; i < records.length - 1; i++) {
-            container.put(records[i]);
+            container.put(records[i]);  //todo и тут
         }
         return this;
     }

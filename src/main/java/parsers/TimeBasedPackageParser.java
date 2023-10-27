@@ -11,7 +11,7 @@ import validators.TimeBasedPackageValidator;
 public class TimeBasedPackageParser extends WitsPackageParser {
 
     public TimeBasedPackageParser() {
-        super(new RecordSplitter(2, 2), new PackageSplitter("\\r?\\n|\\n"), new TimeBasedPackageValidator());
+        super(new TimeBasedRecordParser(), new PackageSplitter("\\r?\\n|\\n"), new TimeBasedPackageValidator());
     }
 
     @Item(number = "08")

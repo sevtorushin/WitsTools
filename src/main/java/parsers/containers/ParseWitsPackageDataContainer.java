@@ -1,35 +1,32 @@
 package parsers.containers;
 
-import parsers.splitters.RecordSplitter;
+import exceptions.WitsRecordParseException;
+import parsers.WitsRecordParser;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ParseWitsPackageDataContainer {
     private Map<String, String[]> storage = new HashMap<>();
-    private RecordSplitter recordSplitter;
+    private WitsRecordParser recordParser;
 
-    public ParseWitsPackageDataContainer(RecordSplitter recordSplitter) {
-        this.recordSplitter = recordSplitter;
+    public ParseWitsPackageDataContainer(WitsRecordParser recordParser) {
+        this.recordParser = recordParser;
     }
 
-    public ParseWitsPackageDataContainer() {
-        this.recordSplitter = new RecordSplitter(2, 2);
-    }
 
     public ParseWitsPackageDataContainer(ParseWitsPackageDataContainer container) {
         this.storage = new HashMap<>(container.getStorage());
-        this.recordSplitter = new RecordSplitter(container.getRecordSplitter().getPackageNumberLength(),
-                container.getRecordSplitter().getItemLength());
+        this.recordParser = container.getRecordParser();
     }
 
-    public void put(String packageNumber, String item, String value) {
-        storage.put(item, new String[]{value, packageNumber});
+    public void put(String packageNumber, String item, String value) throws WitsRecordParseException {
+        put(String.join(packageNumber, item, value));
     }
 
-    public void put(String record) {
-        String[] tokens = recordSplitter.split(record);
-        storage.put(tokens[1], new String[]{tokens[2], tokens[0]});
+    public void put(String record) throws WitsRecordParseException {
+        recordParser = recordParser.parse(record);
+        storage.put(recordParser.getItem(), new String[]{recordParser.getValue(), recordParser.getPackageNumber()});
     }
 
     public String getValue(String item) {
@@ -48,11 +45,11 @@ public class ParseWitsPackageDataContainer {
         return new HashMap<>(storage);
     }
 
-    public RecordSplitter getRecordSplitter() {
-        return recordSplitter;
+    public WitsRecordParser getRecordParser() {
+        return recordParser;
     }
 
-    public void setRecordSplitter(RecordSplitter recordSplitter) {
-        this.recordSplitter = recordSplitter;
+    public void setRecordParser(WitsRecordParser recordParser) {
+        this.recordParser = recordParser;
     }
 }

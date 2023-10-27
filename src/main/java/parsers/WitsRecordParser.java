@@ -18,8 +18,9 @@ public abstract class WitsRecordParser implements Parser<WitsRecordParser, Strin
     public WitsRecordParser parse(String record) throws WitsRecordParseException {
         if (!recordValidator.isValid(record))
             throw new WitsRecordParseException("Invalid record: " + record);
+        container.clear();
         container.put(record);
-        return null;
+        return this;
     }
 
     public String getPackageNumber(){

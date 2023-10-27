@@ -1,9 +1,11 @@
 package parsers.containers;
 
+import exceptions.WitsRecordParseException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
+import parsers.TimeBasedRecordParser;
 
 import java.util.stream.Stream;
 
@@ -21,7 +23,7 @@ class ParseWitsPackageDataContainerTest {
 
     @BeforeAll
     static void setContainer(){
-        container = new ParseWitsPackageDataContainer();
+        container = new ParseWitsPackageDataContainer(new TimeBasedRecordParser());
     }
 
     static Stream<Arguments> methodPackNumDataProvider() {
@@ -31,7 +33,7 @@ class ParseWitsPackageDataContainerTest {
     }
 
     @Test
-    void successfulExecutePut() {
+    void successfulExecutePut() throws WitsRecordParseException {
         container.put("0101ANY");
         String inputPackNum = "01";
         String inputItem = "01";
@@ -50,7 +52,7 @@ class ParseWitsPackageDataContainerTest {
     }
 
     @Test
-    void successfulExecuteOverloadedPut() {
+    void successfulExecuteOverloadedPut() throws WitsRecordParseException {
         container.put("01", "05", "231023");
         String inputPackNum = "01";
         String inputItem = "05";
@@ -64,7 +66,7 @@ class ParseWitsPackageDataContainerTest {
     }
 
     @Test
-    void getValue() {
+    void getValue() throws WitsRecordParseException {
         container.put("0106180214");
         Assertions.assertEquals("180214", container.getValue("06"));
     }
@@ -75,7 +77,7 @@ class ParseWitsPackageDataContainerTest {
     }
 
     @Test
-    void clear() {
+    void clear() throws WitsRecordParseException {
         container.put("0114122.54");
         Assertions.assertEquals(1, container.getStorage().size());
         container.clear();
