@@ -1,8 +1,6 @@
 package validators;
 
-import descriptions.TimeBasedDescription;
-import parsers.PackageSplitter;
-import parsers.TimeBasedParser;
+import parsers.splitters.PackageSplitter;
 
 public class TimeBasedPackageValidator extends PackageValidator{
 

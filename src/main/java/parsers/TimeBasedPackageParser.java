@@ -3,12 +3,14 @@ package parsers;
 import annotation.Item;
 import annotation.Package;
 import exceptions.WitsPackageException;
+import parsers.splitters.PackageSplitter;
+import parsers.splitters.RecordSplitter;
 import validators.TimeBasedPackageValidator;
 
 @Package(number = "01")
-public class TimeBasedParser extends WitsPackageParser {
+public class TimeBasedPackageParser extends WitsPackageParser {
 
-    public TimeBasedParser() {
+    public TimeBasedPackageParser() {
         super(new RecordSplitter(2, 2), new PackageSplitter("\\r?\\n|\\n"), new TimeBasedPackageValidator());
     }
 

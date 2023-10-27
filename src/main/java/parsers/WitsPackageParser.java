@@ -3,7 +3,10 @@ package parsers;
 import annotation.Item;
 import exceptions.WitsPackageException;
 import exceptions.WitsPackageParseException;
-import parsers.containers.ParseWitsDataContainer;
+import parsers.containers.ParseWitsPackageDataContainer;
+import parsers.splitters.PackageSplitter;
+import parsers.splitters.RecordSplitter;
+import parsers.splitters.Splitter;
 import validators.PackageValidator;
 
 import java.time.LocalDate;
@@ -13,12 +16,12 @@ import java.time.format.DateTimeParseException;
 
 public abstract class WitsPackageParser {
     private Splitter<String, String> packageSplitter;
-    private ParseWitsDataContainer container;
+    private ParseWitsPackageDataContainer container;
     private PackageValidator validator;
 
     public WitsPackageParser(RecordSplitter recordSplitter, PackageSplitter packageSplitter, PackageValidator validator) {
         this.packageSplitter = packageSplitter;
-        this.container = new ParseWitsDataContainer(recordSplitter);
+        this.container = new ParseWitsPackageDataContainer(recordSplitter);
         this.validator = validator;
     }
 
@@ -33,8 +36,8 @@ public abstract class WitsPackageParser {
         return this;
     }
 
-    public ParseWitsDataContainer getContainer() {
-        return new ParseWitsDataContainer(container);
+    public ParseWitsPackageDataContainer getContainer() {
+        return new ParseWitsPackageDataContainer(container);
     }
 
     public String getValue(String item) {

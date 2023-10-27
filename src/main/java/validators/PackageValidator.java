@@ -1,21 +1,10 @@
 package validators;
 
-import descriptions.WitsDescriptor;
-import exceptions.WitsPackageException;
-import parsers.PackageSplitter;
-import parsers.Splitter;
-import parsers.WitsPackageParser;
+import exceptions.WitsValidationException;
+import parsers.splitters.PackageSplitter;
+import parsers.splitters.Splitter;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Map;
-import java.util.Set;
-
-public abstract class PackageValidator implements Validator {
+public abstract class PackageValidator extends WitsValidator {
     private RecordValidator recordValidator;
     private Splitter<String, String> packageSplitter;
 
@@ -25,9 +14,9 @@ public abstract class PackageValidator implements Validator {
     }
 
     @Override
-    public boolean isValid(String witsPackage) {
+    public boolean isValidWits(String witsPackage) throws WitsValidationException {
         if (!isWitsPackage(witsPackage))
-            return false;
+            throw new WitsValidationException("Header (&&) or footer (!!) for specified package missing");
         boolean result = false;
         String[] records = packageSplitter.split(witsPackage);
         for (int i = 1; i < records.length - 1; i++) {

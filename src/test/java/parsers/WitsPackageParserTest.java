@@ -1,6 +1,5 @@
 package parsers;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,8 +10,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class WitsPackageParserTest {
     private static WitsPackageParser witsPackageParser;
@@ -28,7 +25,7 @@ class WitsPackageParserTest {
 
     @BeforeAll
     static void setWitsPackageParser(){
-        witsPackageParser = new TimeBasedParser();
+        witsPackageParser = new TimeBasedPackageParser();
     }
 
     static Stream<Arguments> methodPackNumDataProvider() {

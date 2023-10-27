@@ -1,6 +1,4 @@
-package parsers;
-
-import exceptions.WitsPackageParseException;
+package parsers.splitters;
 
 public class RecordSplitter implements Splitter<String, String>{
     private int packageNumberLength;

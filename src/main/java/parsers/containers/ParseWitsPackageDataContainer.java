@@ -1,51 +1,51 @@
 package parsers.containers;
 
-import parsers.RecordSplitter;
+import parsers.splitters.RecordSplitter;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ParseWitsDataContainer {
-    private Map<String, String[]> map = new HashMap<>();
+public class ParseWitsPackageDataContainer {
+    private Map<String, String[]> storage = new HashMap<>();
     private RecordSplitter recordSplitter;
 
-    public ParseWitsDataContainer(RecordSplitter recordSplitter) {
+    public ParseWitsPackageDataContainer(RecordSplitter recordSplitter) {
         this.recordSplitter = recordSplitter;
     }
 
-    public ParseWitsDataContainer() {
+    public ParseWitsPackageDataContainer() {
         this.recordSplitter = new RecordSplitter(2, 2);
     }
 
-    public ParseWitsDataContainer(ParseWitsDataContainer container) {
-        this.map = new HashMap<>(container.getMap());
+    public ParseWitsPackageDataContainer(ParseWitsPackageDataContainer container) {
+        this.storage = new HashMap<>(container.getStorage());
         this.recordSplitter = new RecordSplitter(container.getRecordSplitter().getPackageNumberLength(),
                 container.getRecordSplitter().getItemLength());
     }
 
     public void put(String packageNumber, String item, String value) {
-        map.put(item, new String[]{value, packageNumber});
+        storage.put(item, new String[]{value, packageNumber});
     }
 
     public void put(String record) {
         String[] tokens = recordSplitter.split(record);
-        map.put(tokens[1], new String[]{tokens[2], tokens[0]});
+        storage.put(tokens[1], new String[]{tokens[2], tokens[0]});
     }
 
     public String getValue(String item) {
-        String[] arr = map.get(item);
+        String[] arr = storage.get(item);
         if (arr == null)
             return null;
         else
-            return map.get(item)[0];
+            return storage.get(item)[0];
     }
 
     public void clear() {
-        map.clear();
+        storage.clear();
     }
 
-    public Map<String, String[]> getMap() {
-        return new HashMap<>(map);
+    public Map<String, String[]> getStorage() {
+        return new HashMap<>(storage);
     }
 
     public RecordSplitter getRecordSplitter() {

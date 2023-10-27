@@ -1,8 +1,9 @@
 package validators;
 
 import descriptions.WitsDescriptor;
-import parsers.RecordSplitter;
-import parsers.Splitter;
+import exceptions.WitsValidationException;
+import parsers.splitters.RecordSplitter;
+import parsers.splitters.Splitter;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Set;
 
-abstract class RecordValidator implements Validator {
+public abstract class RecordValidator extends WitsValidator {
     private String packageNumber;
     private Set<String> itemSet;
     private Splitter<String, String> recordSplitter;
@@ -29,44 +30,53 @@ abstract class RecordValidator implements Validator {
         }
     }
 
-    abstract boolean isValidSpecificValue(String item, String value);
+    abstract boolean isValidSpecificValue(String item, String value) throws WitsValidationException;
 
     @Override
-    public boolean isValid(String record) {
+    boolean isValidWits(String record) throws WitsValidationException {
         String[] tokens = recordSplitter.split(record);
         String packageNumber = tokens[0];
         String item = tokens[1];
         String value = tokens[2];
-        boolean isValidPackageNumber = packageNumber.equals(this.packageNumber);
-        boolean isValidItem = itemSet.contains(item);
+        if (!packageNumber.equals(this.packageNumber))
+            throw new WitsValidationException("Invalid package number: " + packageNumber);
+        if (!itemSet.contains(item))
+            throw new WitsValidationException("Invalid item: " + item);
         boolean isValidValue;
         switch (item) {
             case "01":
                 isValidValue = true;
                 break;
             case "02":
-                isValidValue = isNumber(value);
+                if (!(isValidValue = isNumber(value)))
+                    throw new WitsValidationException("Value for item 02 is invalid: " + value);
                 break;
             case "03":
-                isValidValue = isNumber(value);
+                if (!(isValidValue = isNumber(value)))
+                    throw new WitsValidationException("Value for item 03 is invalid: " + value);
                 break;
             case "04":
-                isValidValue = isNumber(value);
+                if (!(isValidValue = isNumber(value)))
+                    throw new WitsValidationException("Value for item 04 is invalid: " + value);
                 break;
             case "05":
-                isValidValue = isDate(value);
+                if (!(isValidValue = isDate(value)))
+                    throw new WitsValidationException("Invalid date: " + value);
                 break;
             case "06":
-                isValidValue = isTime(value);
+                if (!(isValidValue = isTime(value)))
+                    throw new WitsValidationException("Invalid time: " + value);
                 break;
             case "07":
-                isValidValue = isNumber(value) && Integer.parseInt(value) > 0 && Integer.parseInt(value) < 34;
+                if (!isNumber(value))
+                    throw new WitsValidationException("Invalid activity code: " + value);
+                isValidValue = Integer.parseInt(value) > 0 && Integer.parseInt(value) < 34;
                 break;
             default:
                 isValidValue = isValidSpecificValue(item, value);
                 break;
         }
-        return isValidPackageNumber && isValidItem && isValidValue;
+        return isValidValue;
     }
 
     boolean isNumber(String value) {

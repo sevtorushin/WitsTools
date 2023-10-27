@@ -1,4 +1,4 @@
-package parsers;
+package parsers.splitters;
 
 public class PackageSplitter implements Splitter<String, String>{
     private String lineFeedPattern;

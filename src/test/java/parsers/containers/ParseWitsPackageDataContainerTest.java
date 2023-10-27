@@ -1,18 +1,14 @@
 package parsers.containers;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
-import parsers.RecordSplitter;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class ParseWitsDataContainerTest {
-    private static ParseWitsDataContainer container;
+class ParseWitsPackageDataContainerTest {
+    private static ParseWitsPackageDataContainer container;
     private static final String witsPackage = "&&\n" +
             "01018800\n" +
             "01020\n" +
@@ -25,7 +21,7 @@ class ParseWitsDataContainerTest {
 
     @BeforeAll
     static void setContainer(){
-        container = new ParseWitsDataContainer();
+        container = new ParseWitsPackageDataContainer();
     }
 
     static Stream<Arguments> methodPackNumDataProvider() {
@@ -40,9 +36,9 @@ class ParseWitsDataContainerTest {
         String inputPackNum = "01";
         String inputItem = "01";
         String inputValue = "ANY";
-        String packNumInContainer = container.getMap().get(inputItem)[1];
-        String itemInContainer = container.getMap().containsKey(inputItem) ? inputItem : null;
-        String valueInContainer = container.getMap().get(inputItem)[0];
+        String packNumInContainer = container.getStorage().get(inputItem)[1];
+        String itemInContainer = container.getStorage().containsKey(inputItem) ? inputItem : null;
+        String valueInContainer = container.getStorage().get(inputItem)[0];
         Assertions.assertEquals(inputPackNum, packNumInContainer);
         Assertions.assertEquals(inputItem, itemInContainer);
         Assertions.assertEquals(inputValue, valueInContainer);
@@ -59,9 +55,9 @@ class ParseWitsDataContainerTest {
         String inputPackNum = "01";
         String inputItem = "05";
         String inputValue = "231023";
-        String packNumInContainer = container.getMap().get(inputItem)[1];
-        String itemInContainer = container.getMap().containsKey(inputItem) ? inputItem : null;
-        String valueInContainer = container.getMap().get(inputItem)[0];
+        String packNumInContainer = container.getStorage().get(inputItem)[1];
+        String itemInContainer = container.getStorage().containsKey(inputItem) ? inputItem : null;
+        String valueInContainer = container.getStorage().get(inputItem)[0];
         Assertions.assertEquals(inputPackNum, packNumInContainer);
         Assertions.assertEquals(inputItem, itemInContainer);
         Assertions.assertEquals(inputValue, valueInContainer);
@@ -81,8 +77,8 @@ class ParseWitsDataContainerTest {
     @Test
     void clear() {
         container.put("0114122.54");
-        Assertions.assertEquals(1, container.getMap().size());
+        Assertions.assertEquals(1, container.getStorage().size());
         container.clear();
-        Assertions.assertEquals(0, container.getMap().size());
+        Assertions.assertEquals(0, container.getStorage().size());
     }
 }
