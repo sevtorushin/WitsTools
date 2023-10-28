@@ -49,15 +49,15 @@ public abstract class RecordValidator extends WitsValidator {
                 break;
             case "02":
                 if (!(isValidValue = isNumber(value)))
-                    throw new WitsValidationException("Value for item 02 is invalid: " + value);
+                    throw new WitsValidationException("Invalid value for item 02: " + value);
                 break;
             case "03":
                 if (!(isValidValue = isNumber(value)))
-                    throw new WitsValidationException("Value for item 03 is invalid: " + value);
+                    throw new WitsValidationException("Invalid value for item 03: " + value);
                 break;
             case "04":
                 if (!(isValidValue = isNumber(value)))
-                    throw new WitsValidationException("Value for item 04 is invalid: " + value);
+                    throw new WitsValidationException("Invalid value for item 04: " + value);
                 break;
             case "05":
                 if (!(isValidValue = isDate(value)))
@@ -81,8 +81,8 @@ public abstract class RecordValidator extends WitsValidator {
     }
 
     boolean isNumber(String value) {
-        String numberRegexp = "-?\\d+\\.?\\d*?";
-        String eNumberRegexp = "-?\\d+\\.?\\d*?e-\\d+";
+        String numberRegexp = "-?\\d+[.,]?\\d*?";
+        String eNumberRegexp = "-?\\d+[.,]?\\d*?e-\\d+";
         return value.matches(numberRegexp) ||
                 value.matches(eNumberRegexp);
     }

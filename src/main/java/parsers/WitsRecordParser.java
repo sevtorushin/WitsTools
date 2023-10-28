@@ -6,8 +6,8 @@ import parsers.splitters.RecordSplitter;
 import validators.RecordValidator;
 
 public abstract class WitsRecordParser implements Parser<WitsRecordParser, String> {
-    private ParseWitsRecordDataContainer container;
-    private RecordValidator recordValidator;
+    private final ParseWitsRecordDataContainer container;
+    private final RecordValidator recordValidator;
 
     public WitsRecordParser(RecordValidator recordValidator, RecordSplitter recordSplitter) {
         container = new ParseWitsRecordDataContainer(recordSplitter);

@@ -1,6 +1,7 @@
 package validators;
 
 import descriptions.TimeBasedDescription;
+import exceptions.WitsRecordValidationException;
 import exceptions.WitsValidationException;
 import parsers.splitters.RecordSplitter;
 
@@ -17,16 +18,11 @@ public class TimeBasedRecordValidator extends RecordValidator {
         try {
             parseItem = Integer.parseInt(item);
             if (parseItem > 45)
-                throw new WitsValidationException("Unexpected item from record: " + item);
-            switch (item) {
-//                case "08":
-//                    isValidValue = ...
-                default:
-                    isValidValue = isNumber(value);
-
-            }
+                throw new WitsValidationException("Unexpected record item: " + item);
+            if (!(isValidValue = isNumber(value)))
+                throw new WitsRecordValidationException("Invalid value: " + value + " for item: " + item);
         } catch (NumberFormatException e) {
-            throw new WitsValidationException("Unexpected item from record: " + item);
+            throw new WitsRecordValidationException("Unexpected record item: " + item);
         }
         return isValidValue;
     }

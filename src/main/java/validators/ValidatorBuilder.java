@@ -3,10 +3,10 @@ package validators;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidatorBuilder {
-    private List<PackageValidator> validators;
+public class ValidatorBuilder<T extends Validator> implements Validator{
+    private List<T> validators;
 
-    public ValidatorBuilder(List<PackageValidator> validators) {
+    public ValidatorBuilder(List<T> validators) {
         this.validators = validators;
     }
 
@@ -14,7 +14,7 @@ public class ValidatorBuilder {
         this.validators = new ArrayList<>();
     }
 
-    public void add(PackageValidator validator){
+    public void add(T validator){
         validators.add(validator);
     }
 
@@ -25,11 +25,11 @@ public class ValidatorBuilder {
         return result;
     }
 
-    public List<PackageValidator> getValidators() {
+    public List<T> getValidators() {
         return validators;
     }
 
-    public void setValidators(List<PackageValidator> validators) {
+    public void setValidators(List<T> validators) {
         this.validators = validators;
     }
 }
