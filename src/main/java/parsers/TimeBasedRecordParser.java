@@ -1,11 +1,17 @@
 package parsers;
 
 import parsers.splitters.RecordSplitter;
-import validators.RecordValidator;
 import validators.TimeBasedRecordValidator;
+import validators.ValidatorBuilder;
+
+import java.util.List;
 
 public class TimeBasedRecordParser extends WitsRecordParser {
     public TimeBasedRecordParser() {
-        super(new TimeBasedRecordValidator(), new RecordSplitter(2, 2));
+        super(new ValidatorBuilder<>(List.of(new TimeBasedRecordValidator())), new RecordSplitter(2, 2));
+    }
+
+    public TimeBasedRecordParser(ValidatorBuilder<TimeBasedRecordValidator> validatorBuilder) {
+        super(validatorBuilder, new RecordSplitter(2, 2));
     }
 }

@@ -4,19 +4,20 @@ import exceptions.WitsRecordParseException;
 import parsers.containers.ParseWitsRecordDataContainer;
 import parsers.splitters.RecordSplitter;
 import validators.RecordValidator;
+import validators.ValidatorBuilder;
 
 public abstract class WitsRecordParser implements Parser<WitsRecordParser, String> {
     private final ParseWitsRecordDataContainer container;
-    private final RecordValidator recordValidator;
+    private final ValidatorBuilder<? extends RecordValidator> recordValidators;
 
-    public WitsRecordParser(RecordValidator recordValidator, RecordSplitter recordSplitter) {
+    public WitsRecordParser(ValidatorBuilder<? extends RecordValidator> recordValidators, RecordSplitter recordSplitter) {
         container = new ParseWitsRecordDataContainer(recordSplitter);
-        this.recordValidator = recordValidator;
+        this.recordValidators = recordValidators;
     }
 
     @Override
     public WitsRecordParser parse(String record) throws WitsRecordParseException {
-        if (!recordValidator.isValid(record))
+        if (!recordValidators.isValid(record))
             throw new WitsRecordParseException("Invalid record: " + record);
         container.clear();
         container.put(record);

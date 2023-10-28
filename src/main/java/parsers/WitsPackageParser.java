@@ -8,6 +8,7 @@ import parsers.containers.ParseWitsPackageDataContainer;
 import parsers.splitters.PackageSplitter;
 import parsers.splitters.Splitter;
 import validators.PackageValidator;
+import validators.ValidatorBuilder;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,17 +17,17 @@ import java.time.format.DateTimeParseException;
 
 public abstract class WitsPackageParser implements Parser<WitsPackageParser, String>{
     private Splitter<String, String> packageSplitter;
-    private ParseWitsPackageDataContainer container;
-    private PackageValidator validator;
+    private final ParseWitsPackageDataContainer container;
+    private ValidatorBuilder<? extends PackageValidator> validators;
 
-    public WitsPackageParser(WitsRecordParser recordParser, PackageSplitter packageSplitter, PackageValidator validator) {
+    public WitsPackageParser(WitsRecordParser recordParser, PackageSplitter packageSplitter, ValidatorBuilder<? extends PackageValidator> validators) {
         this.packageSplitter = packageSplitter;
         this.container = new ParseWitsPackageDataContainer(recordParser);
-        this.validator = validator;
+        this.validators = validators;
     }
 
     public WitsPackageParser parse(String witsPackage) throws WitsParseException {
-        if (!validator.isValid(witsPackage))    //todo двойная валидация данных тут
+        if (!validators.isValid(witsPackage))    //todo двойная валидация данных тут
             throw new WitsPackageParseException("Invalid package");
         container.clear();
         String[] records = packageSplitter.split(witsPackage);
@@ -117,5 +118,13 @@ public abstract class WitsPackageParser implements Parser<WitsPackageParser, Str
 
     public void setPackageSplitter(Splitter<String, String> packageSplitter) {
         this.packageSplitter = packageSplitter;
+    }
+
+    public ValidatorBuilder<? extends PackageValidator> getValidators() {
+        return validators;
+    }
+
+    public void setValidators(ValidatorBuilder<? extends PackageValidator> validators) {
+        this.validators = validators;
     }
 }

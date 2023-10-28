@@ -4,14 +4,23 @@ import annotation.Item;
 import annotation.Package;
 import exceptions.WitsPackageException;
 import parsers.splitters.PackageSplitter;
-import parsers.splitters.RecordSplitter;
-import validators.TimeBasedPackageValidator;
+import validators.*;
+
+import java.util.List;
 
 @Package(number = "01")
 public class TimeBasedPackageParser extends WitsPackageParser {
 
     public TimeBasedPackageParser() {
-        super(new TimeBasedRecordParser(), new PackageSplitter("\\r?\\n|\\n"), new TimeBasedPackageValidator());
+        super(new TimeBasedRecordParser(), new PackageSplitter("\\r?\\n|\\n"), new ValidatorBuilder<>(List.of(new TimeBasedPackageValidator())));
+    }
+
+    public TimeBasedPackageParser(ValidatorBuilder<TimeBasedPackageValidator> packageValidatorBuilder) {
+        super(new TimeBasedRecordParser(), new PackageSplitter("\\r?\\n|\\n"), packageValidatorBuilder);
+    }
+
+    public TimeBasedPackageParser(ValidatorBuilder<TimeBasedPackageValidator> packageValidatorBuilder, ValidatorBuilder<TimeBasedRecordValidator> recordValidatorBuilder) {
+        super(new TimeBasedRecordParser(recordValidatorBuilder), new PackageSplitter("\\r?\\n|\\n"), packageValidatorBuilder);
     }
 
     @Item(number = "08")
