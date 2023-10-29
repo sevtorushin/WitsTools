@@ -27,12 +27,12 @@ public abstract class WitsPackageParser implements Parser<WitsPackageParser, Str
     }
 
     public WitsPackageParser parse(String witsPackage) throws WitsParseException {
-        if (!validators.isValid(witsPackage))    //todo двойная валидация данных тут
+        if (!validators.isValid(witsPackage))
             throw new WitsPackageParseException("Invalid package");
         container.clear();
         String[] records = packageSplitter.split(witsPackage);
         for (int i = 1; i < records.length - 1; i++) {
-            container.put(records[i]);  //todo и тут
+            container.put(records[i]);
         }
         return this;
     }
