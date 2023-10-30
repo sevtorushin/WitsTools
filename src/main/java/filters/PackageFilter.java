@@ -5,20 +5,22 @@ import parsers.WitsPackageParser;
 import parsers.WitsParsersProvider;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 public class PackageFilter implements Filter {
 
     private Set<String> packageNumbers;
-    private WitsParsersProvider packageProvider;
+    private WitsParsersProvider parsersProvider;
 
     public PackageFilter(String... packageNumbers) {
-        this.packageNumbers = Set.of(packageNumbers);
-        this.packageProvider = new WitsParsersProvider();
+        this.packageNumbers = new HashSet<>(Set.of(packageNumbers));
+        this.parsersProvider = new WitsParsersProvider();
     }
 
     public String filtrate(String witsPackage) {
-        WitsPackageParser parser = (WitsPackageParser) packageProvider.getParserForPackage(witsPackage);
+        WitsPackageParser parser = (WitsPackageParser) parsersProvider.getParserForPackage(witsPackage);
+        parser.resetValidation();
         try {
             parser.parse(witsPackage);
             if (!packageNumbers.contains(parser.getPackageNumber()))
@@ -54,11 +56,11 @@ public class PackageFilter implements Filter {
         this.packageNumbers = packageNumbers;
     }
 
-    public WitsParsersProvider getPackageProvider() {
-        return packageProvider;
+    public WitsParsersProvider getParsersProvider() {
+        return parsersProvider;
     }
 
-    public void setPackageProvider(WitsParsersProvider packageProvider) {
-        this.packageProvider = packageProvider;
+    public void setParsersProvider(WitsParsersProvider parsersProvider) {
+        this.parsersProvider = parsersProvider;
     }
 }
