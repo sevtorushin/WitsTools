@@ -18,6 +18,7 @@ public class ValidatorBuilder<T extends Validator> implements Validator{
         validators.add(validator);
     }
 
+    @Override
     public boolean isValid(String witsPackage) {
         boolean result = true;
         for(Validator v : validators)

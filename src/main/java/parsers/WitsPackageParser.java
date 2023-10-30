@@ -15,7 +15,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public abstract class WitsPackageParser implements Parser<WitsPackageParser, String>{
+public abstract class WitsPackageParser extends WitsParser<WitsPackageParser> {
     private Splitter<String, String> packageSplitter;
     private final ParseWitsPackageDataContainer container;
     private ValidatorBuilder<? extends PackageValidator> validators;

@@ -6,7 +6,7 @@ import parsers.splitters.RecordSplitter;
 import validators.RecordValidator;
 import validators.ValidatorBuilder;
 
-public abstract class WitsRecordParser implements Parser<WitsRecordParser, String> {
+public abstract class WitsRecordParser extends WitsParser<WitsRecordParser> {
     private final ParseWitsRecordDataContainer container;
     private final ValidatorBuilder<? extends RecordValidator> recordValidators;
 
