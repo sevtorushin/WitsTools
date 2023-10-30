@@ -37,15 +37,21 @@ public abstract class WitsPackageParser implements Parser<WitsPackageParser, Str
         return this;
     }
 
+    public String getPackageNumber() throws WitsParseException {
+        return container.getStorage().values().stream()
+                .findFirst()
+                .orElseThrow(() -> new WitsParseException("Parse exception. Data is missing. Inner container is empty"))[1];
+    }
+
     public ParseWitsPackageDataContainer getContainer() {
         return new ParseWitsPackageDataContainer(container);
     }
 
-    public String getValue(String item) {
+    public String getValue(String item) throws WitsParseException {
         return container.getValue(item);
     }
 
-    public Double getDoubleValue(String item) throws WitsPackageException {
+    public Double getDoubleValue(String item) throws WitsParseException {
         if (Integer.parseInt(item) < 7) {
             throw new IllegalArgumentException("Incorrect argument: " + item + ". Item must be greater than 7");
         }
@@ -54,33 +60,33 @@ public abstract class WitsPackageParser implements Parser<WitsPackageParser, Str
             try {
                 return Double.parseDouble(value);
             } catch (NumberFormatException nfe) {
-                throw new WitsPackageException("Wrong value: " + value);
+                throw new WitsParseException("Wrong value: " + value);
             }
         return null;
     }
 
     @Item(number = "01")
-    public String getWellId() {
+    public String getWellId() throws WitsParseException {
         return getValue("01");
     }
 
     @Item(number = "02")
-    public String getHoleSectNo() {
+    public String getHoleSectNo() throws WitsParseException {
         return getValue("02");
     }
 
     @Item(number = "03")
-    public String getRecordId() {
+    public String getRecordId() throws WitsParseException {
         return getValue("03");
     }
 
     @Item(number = "04")
-    public String getSeqId() {
+    public String getSeqId() throws WitsParseException {
         return getValue("04");
     }
 
     @Item(number = "05")
-    public LocalDate getDate() {
+    public LocalDate getDate() throws WitsParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
         String date = getValue("05");
         if (date != null)
@@ -94,7 +100,7 @@ public abstract class WitsPackageParser implements Parser<WitsPackageParser, Str
     }
 
     @Item(number = "06")
-    public LocalTime getTime() {
+    public LocalTime getTime() throws WitsParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmmss");
         String time = getValue("06");
         if (time != null)
@@ -108,7 +114,7 @@ public abstract class WitsPackageParser implements Parser<WitsPackageParser, Str
     }
 
     @Item(number = "07")
-    public String getActivCode() {
+    public String getActivCode() throws WitsParseException {
         return container.getValue("07");
     }
 

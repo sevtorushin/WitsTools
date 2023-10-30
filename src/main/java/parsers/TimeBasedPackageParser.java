@@ -3,6 +3,7 @@ package parsers;
 import annotation.Item;
 import annotation.Package;
 import exceptions.WitsPackageException;
+import exceptions.WitsParseException;
 import parsers.splitters.PackageSplitter;
 import validators.*;
 
@@ -77,10 +78,10 @@ public class TimeBasedPackageParser extends WitsPackageParser {
      * Returns {@code double} the bit depth value.
      *
      * @return double value for item 08 (BITDEPTH)
-     * @throws WitsPackageException {@inheritDoc}
+     * @throws WitsParseException {@inheritDoc}
      */
     @Item(number = "08")
-    public Double getBitDepth() throws WitsPackageException {
+    public Double getBitDepth() throws WitsParseException {
         return getDoubleValue("08");
     }
 
@@ -88,10 +89,10 @@ public class TimeBasedPackageParser extends WitsPackageParser {
      * Returns {@code double} well depth value.
      *
      * @return double value for item 10 (MD)
-     * @throws WitsPackageException {@inheritDoc}
+     * @throws WitsParseException {@inheritDoc}
      */
     @Item(number = "10")
-    public Double getMeasuredDepth() throws WitsPackageException {
+    public Double getMeasuredDepth() throws WitsParseException {
         return getDoubleValue("10");
     }
 
@@ -99,10 +100,10 @@ public class TimeBasedPackageParser extends WitsPackageParser {
      * Returns the {@code double} value of the block position.
      *
      * @return double value for item 12 (BPOS)
-     * @throws WitsPackageException {@inheritDoc}
+     * @throws WitsParseException {@inheritDoc}
      */
     @Item(number = "12")
-    public Double getBlockPos() throws WitsPackageException {
+    public Double getBlockPos() throws WitsParseException {
         return getDoubleValue("12");
     }
 
@@ -110,10 +111,10 @@ public class TimeBasedPackageParser extends WitsPackageParser {
      * Returns {@code double} the value of the load on the hook.
      *
      * @return double value for item 14 (HKLD)
-     * @throws WitsPackageException {@inheritDoc}
+     * @throws WitsParseException {@inheritDoc}
      */
     @Item(number = "14")
-    public Double getHKLD() throws WitsPackageException {
+    public Double getHKLD() throws WitsParseException {
         return getDoubleValue("14");
     }
 
@@ -121,10 +122,10 @@ public class TimeBasedPackageParser extends WitsPackageParser {
      * Returns {@code double} weight on bit value.
      *
      * @return double value for item 16 (WOB)
-     * @throws WitsPackageException {@inheritDoc}
+     * @throws WitsParseException {@inheritDoc}
      */
     @Item(number = "16")
-    public Double getWOB() throws WitsPackageException {
+    public Double getWOB() throws WitsParseException {
         return getDoubleValue("16");
     }
 
@@ -132,10 +133,10 @@ public class TimeBasedPackageParser extends WitsPackageParser {
      * Returns {@code double} the pressure value in the discharge line.
      *
      * @return double value for item 21 (pressure)
-     * @throws WitsPackageException {@inheritDoc}
+     * @throws WitsParseException {@inheritDoc}
      */
     @Item(number = "21")
-    public Double getPressure() throws WitsPackageException {
+    public Double getPressure() throws WitsParseException {
         return getDoubleValue("21");
     }
 }

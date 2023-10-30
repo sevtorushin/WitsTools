@@ -3,6 +3,7 @@ package parsers;
 import annotation.Item;
 import annotation.Package;
 import exceptions.WitsPackageException;
+import exceptions.WitsParseException;
 import parsers.splitters.PackageSplitter;
 import parsers.splitters.RecordSplitter;
 
@@ -14,17 +15,17 @@ public class MwdEvaluationParser extends WitsPackageParser {
     }
 
     @Item(number = "21")
-    public Double getGammaMD(String witsPackage) throws WitsPackageException {
+    public Double getGammaMD(String witsPackage) throws WitsParseException {
         return getDoubleValue("21");
     }
 
     @Item(number = "23")
-    public Double getGammaRaw(String witsPackage) throws WitsPackageException {
+    public Double getGammaRaw(String witsPackage) throws WitsParseException {
         return getDoubleValue("23");
     }
 
     @Item(number = "24")
-    public Double getGammaCorr(String witsPackage) throws WitsPackageException {
+    public Double getGammaCorr(String witsPackage) throws WitsParseException {
         return getDoubleValue("24");
     }
 }

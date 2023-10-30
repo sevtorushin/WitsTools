@@ -1,5 +1,6 @@
 package parsers.containers;
 
+import exceptions.WitsParseException;
 import exceptions.WitsRecordParseException;
 import parsers.WitsRecordParser;
 
@@ -29,7 +30,9 @@ public class ParseWitsPackageDataContainer {
         storage.put(recordParser.getItem(), new String[]{recordParser.getValue(), recordParser.getPackageNumber()});
     }
 
-    public String getValue(String item) {
+    public String getValue(String item) throws WitsParseException {
+        if (storage.isEmpty())
+            throw new WitsParseException("Parse exception. Data is missing. Inner container is empty");
         String[] arr = storage.get(item);
         if (arr == null)
             return null;

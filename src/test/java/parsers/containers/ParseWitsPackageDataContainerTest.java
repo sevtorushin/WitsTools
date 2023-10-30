@@ -1,5 +1,6 @@
 package parsers.containers;
 
+import exceptions.WitsParseException;
 import exceptions.WitsRecordParseException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -66,13 +67,13 @@ class ParseWitsPackageDataContainerTest {
     }
 
     @Test
-    void getValue() throws WitsRecordParseException {
+    void getValue() throws WitsParseException {
         container.put("0106180214");
         Assertions.assertEquals("180214", container.getValue("06"));
     }
 
     @Test
-    void shouldGetNullGetValue() {
+    void shouldGetNullGetValue() throws WitsParseException {
         Assertions.assertNull(container.getValue("12"));
     }
 
