@@ -33,4 +33,8 @@ public class ValidatorBuilder<T extends Validator> implements Validator{
     public void setValidators(List<T> validators) {
         this.validators = validators;
     }
+
+    public void clearAllValidators(){
+        validators.clear();
+    }
 }

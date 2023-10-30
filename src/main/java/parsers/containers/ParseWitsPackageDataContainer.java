@@ -40,6 +40,10 @@ public class ParseWitsPackageDataContainer {
             return storage.get(item)[0];
     }
 
+    public void resetValidation(){
+        this.recordParser.resetValidation();
+    }
+
     public void clear() {
         storage.clear();
     }

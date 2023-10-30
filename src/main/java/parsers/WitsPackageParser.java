@@ -118,6 +118,11 @@ public abstract class WitsPackageParser extends WitsParser<WitsPackageParser> {
         return container.getValue("07");
     }
 
+    public void resetValidation() {
+        this.validators.clearAllValidators();
+        this.container.resetValidation();
+    }
+
     public Splitter<String, String> getPackageSplitter() {
         return packageSplitter;
     }

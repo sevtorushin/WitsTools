@@ -2,11 +2,11 @@ package parsers;
 
 import annotation.Item;
 import annotation.Package;
-import exceptions.WitsPackageException;
 import exceptions.WitsParseException;
 import parsers.splitters.PackageSplitter;
 import validators.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,7 +40,7 @@ public class TimeBasedPackageParser extends WitsPackageParser {
      * and a record validator {@code TimeBasedRecordValidator}.
      */
     public TimeBasedPackageParser() {
-        super(new TimeBasedRecordParser(), new PackageSplitter("\\r?\\n|\\n"), new ValidatorBuilder<>(List.of(new TimeBasedPackageValidator())));
+        super(new TimeBasedRecordParser(), new PackageSplitter("\\r?\\n|\\n"), new ValidatorBuilder<>(new ArrayList<>(List.of(new TimeBasedPackageValidator()))));
     }
 
     /**

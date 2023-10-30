@@ -24,6 +24,10 @@ public abstract class WitsRecordParser extends WitsParser<WitsRecordParser> {
         return this;
     }
 
+    public void resetValidation(){
+        this.recordValidators.clearAllValidators();
+    }
+
     public String getPackageNumber(){
         return container.getPackageNumber();
     }
