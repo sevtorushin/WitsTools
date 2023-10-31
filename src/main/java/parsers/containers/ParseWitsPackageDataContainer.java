@@ -4,8 +4,7 @@ import exceptions.WitsParseException;
 import exceptions.WitsRecordParseException;
 import parsers.WitsRecordParser;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ParseWitsPackageDataContainer {
     private Map<String, String[]> storage = new HashMap<>();
@@ -38,6 +37,17 @@ public class ParseWitsPackageDataContainer {
             return null;
         else
             return storage.get(item)[0];
+    }
+
+    public Set<String> getRecordsSet(){
+        return storage.entrySet().stream()
+                .map(entry -> new StringBuilder()
+                        .append(entry.getValue()[1])
+                        .append(entry.getKey())
+                        .append(entry.getValue()[0]))
+                .collect(HashSet::new,
+                        (set, stringBuilder) -> set.add(stringBuilder.toString()),
+                        AbstractCollection::addAll);
     }
 
     public void resetValidation(){
