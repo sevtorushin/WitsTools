@@ -5,6 +5,7 @@ import parsers.WitsPackageParser;
 import parsers.WitsParsersProvider;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,7 +50,7 @@ public class PackageFilter implements Filter {
     }
 
     public Set<String> getPackageNumbers() {
-        return packageNumbers;
+        return Collections.unmodifiableSet(packageNumbers);
     }
 
     public void setPackageNumbers(Set<String> packageNumbers) {
