@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Set;
 
 public abstract class WitsPackageParser extends WitsParser<WitsPackageParser> {
     private Splitter<String, String> packageSplitter;
@@ -41,6 +42,10 @@ public abstract class WitsPackageParser extends WitsParser<WitsPackageParser> {
         return container.getStorage().values().stream()
                 .findFirst()
                 .orElseThrow(() -> new WitsParseException("Parse exception. Data is missing. Inner container is empty"))[1];
+    }
+
+    public Set<String> getRecordsSet(){
+        return container.getRecordsSet();
     }
 
     public ParseWitsPackageDataContainer getContainer() {
