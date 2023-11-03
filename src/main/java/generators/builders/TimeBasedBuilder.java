@@ -1,4 +1,4 @@
-package builders;
+package generators.builders;
 
 import descriptions.TimeBasedDescription;
 import generators.wits.TimeBasedGenerator;

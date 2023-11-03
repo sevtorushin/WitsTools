@@ -1,14 +1,15 @@
 package validators;
 
+import descriptions.SurveyDirectionalDescription;
 import descriptions.TimeBasedDescription;
 import exceptions.WitsRecordValidationException;
 import exceptions.WitsValidationException;
 import parsers.splitters.RecordSplitter;
 
-public class TimeBasedRecordValidator extends RecordValidator {
+public class SurveyDirectionalRecordValidator extends RecordValidator {
 
-    public TimeBasedRecordValidator() {
-        super(TimeBasedDescription.class, new RecordSplitter(2, 2));
+    public SurveyDirectionalRecordValidator() {
+        super(SurveyDirectionalDescription.class, new RecordSplitter(2, 2));
     }
 
     @Override
@@ -17,7 +18,7 @@ public class TimeBasedRecordValidator extends RecordValidator {
         int parseItem;
         try {
             parseItem = Integer.parseInt(item);
-            if (parseItem > TimeBasedDescription.values().length)
+            if (parseItem > SurveyDirectionalDescription.values().length)
                 throw new WitsValidationException("Unexpected record item: " + item);
             if (!(isValidValue = isNumber(value)))
                 throw new WitsRecordValidationException("Invalid value: " + value + " for item: " + item);

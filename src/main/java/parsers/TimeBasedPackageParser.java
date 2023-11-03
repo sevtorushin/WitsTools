@@ -40,7 +40,9 @@ public class TimeBasedPackageParser extends WitsPackageParser {
      * and a record validator {@code TimeBasedRecordValidator}.
      */
     public TimeBasedPackageParser() {
-        super(new TimeBasedRecordParser(), new PackageSplitter("\\r?\\n|\\n"), new ValidatorBuilder<>(new ArrayList<>(List.of(new TimeBasedPackageValidator()))));
+        super(new TimeBasedRecordParser(),
+                new PackageSplitter("\\r?\\n|\\n"),
+                new ValidatorBuilder<>(new ArrayList<>(List.of(new TimeBasedPackageValidator()))));
     }
 
     /**
@@ -55,7 +57,9 @@ public class TimeBasedPackageParser extends WitsPackageParser {
      * @see ValidatorBuilder
      */
     public TimeBasedPackageParser(ValidatorBuilder<TimeBasedPackageValidator> packageValidatorBuilder) {
-        super(new TimeBasedRecordParser(), new PackageSplitter("\\r?\\n|\\n"), packageValidatorBuilder);
+        super(new TimeBasedRecordParser(),
+                new PackageSplitter("\\r?\\n|\\n"),
+                packageValidatorBuilder);
     }
 
     /**
@@ -70,8 +74,11 @@ public class TimeBasedPackageParser extends WitsPackageParser {
      *
      * @see ValidatorBuilder
      */
-    public TimeBasedPackageParser(ValidatorBuilder<TimeBasedPackageValidator> packageValidatorBuilder, ValidatorBuilder<TimeBasedRecordValidator> recordValidatorBuilder) {
-        super(new TimeBasedRecordParser(recordValidatorBuilder), new PackageSplitter("\\r?\\n|\\n"), packageValidatorBuilder);
+    public TimeBasedPackageParser(ValidatorBuilder<TimeBasedPackageValidator> packageValidatorBuilder,
+                                  ValidatorBuilder<TimeBasedRecordValidator> recordValidatorBuilder) {
+        super(new TimeBasedRecordParser(recordValidatorBuilder),
+                new PackageSplitter("\\r?\\n|\\n"),
+                packageValidatorBuilder);
     }
 
     /**
