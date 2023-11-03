@@ -3,11 +3,11 @@ package filters;
 import descriptions.SurveyDirectionalDescription;
 import parsers.SurveyDirectionalPackageParser;
 
-import java.util.List;
+import java.util.Set;
 
 public class SurveyDirectionalItemFilter extends ItemFilter<SurveyDirectionalDescription>{
 
-    public SurveyDirectionalItemFilter(List<SurveyDirectionalDescription> descriptors) {
+    public SurveyDirectionalItemFilter(Set<SurveyDirectionalDescription> descriptors) {
         super(descriptors, new SurveyDirectionalPackageParser());
     }
 

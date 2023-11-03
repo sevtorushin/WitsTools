@@ -3,11 +3,11 @@ package filters;
 import descriptions.MwdEvaluationDescription;
 import parsers.MwdEvaluationPackageParser;
 
-import java.util.List;
+import java.util.Set;
 
 public class MwdEvaluationItemFilter extends ItemFilter<MwdEvaluationDescription>{
 
-    public MwdEvaluationItemFilter(List<MwdEvaluationDescription> descriptors) {
+    public MwdEvaluationItemFilter(Set<MwdEvaluationDescription> descriptors) {
         super(descriptors, new MwdEvaluationPackageParser());
     }
 

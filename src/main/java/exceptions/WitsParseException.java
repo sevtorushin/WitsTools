@@ -1,6 +1,9 @@
 package exceptions;
 
-public class WitsParseException extends Throwable{
+/**
+ *
+ */
+public class WitsParseException extends Exception{
     public WitsParseException(String message) {
         super(message);
     }

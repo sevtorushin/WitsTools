@@ -85,7 +85,7 @@ public class TimeBasedPackageParser extends WitsPackageParser {
      * Returns {@code double} the bit depth value.
      *
      * @return double value for item 08 (BITDEPTH)
-     * @throws WitsParseException {@inheritDoc}
+     * @throws WitsParseException throws parse exception {@inheritDoc}
      */
     @Item(number = "08")
     public Double getBitDepth() throws WitsParseException {
@@ -96,7 +96,7 @@ public class TimeBasedPackageParser extends WitsPackageParser {
      * Returns {@code double} well depth value.
      *
      * @return double value for item 10 (MD)
-     * @throws WitsParseException {@inheritDoc}
+     * @throws WitsParseException throws parse exception {@inheritDoc}
      */
     @Item(number = "10")
     public Double getMeasuredDepth() throws WitsParseException {
@@ -107,7 +107,7 @@ public class TimeBasedPackageParser extends WitsPackageParser {
      * Returns the {@code double} value of the block position.
      *
      * @return double value for item 12 (BPOS)
-     * @throws WitsParseException {@inheritDoc}
+     * @throws WitsParseException throws parse exception {@inheritDoc}
      */
     @Item(number = "12")
     public Double getBlockPos() throws WitsParseException {
@@ -118,7 +118,7 @@ public class TimeBasedPackageParser extends WitsPackageParser {
      * Returns {@code double} the value of the load on the hook.
      *
      * @return double value for item 14 (HKLD)
-     * @throws WitsParseException {@inheritDoc}
+     * @throws WitsParseException throws parse exception {@inheritDoc}
      */
     @Item(number = "14")
     public Double getHKLD() throws WitsParseException {
@@ -129,7 +129,7 @@ public class TimeBasedPackageParser extends WitsPackageParser {
      * Returns {@code double} weight on bit value.
      *
      * @return double value for item 16 (WOB)
-     * @throws WitsParseException {@inheritDoc}
+     * @throws WitsParseException throws parse exception {@inheritDoc}
      */
     @Item(number = "16")
     public Double getWOB() throws WitsParseException {
@@ -140,7 +140,7 @@ public class TimeBasedPackageParser extends WitsPackageParser {
      * Returns {@code double} the pressure value in the discharge line.
      *
      * @return double value for item 21 (pressure)
-     * @throws WitsParseException {@inheritDoc}
+     * @throws WitsParseException throws parse exception {@inheritDoc}
      */
     @Item(number = "21")
     public Double getPressure() throws WitsParseException {

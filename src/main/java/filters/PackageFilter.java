@@ -1,21 +1,22 @@
 package filters;
 
+import descriptions.WitsDescriptor;
 import exceptions.WitsParseException;
 import parsers.WitsPackageParser;
 import parsers.WitsParsersProvider;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class PackageFilter implements Filter {
 
-    private Set<String> packageNumbers;
-    private WitsParsersProvider parsersProvider;
+    private final Set<String> packageNumbers;
+    private final WitsParsersProvider parsersProvider;
 
-    public PackageFilter(String... packageNumbers) {
-        this.packageNumbers = new HashSet<>(Set.of(packageNumbers));
+    public PackageFilter(Set<Class<? extends WitsDescriptor>> descriptors) {
+        this.packageNumbers = descriptors.stream()
+                .map(aClass -> aClass.getEnumConstants()[0].getPackageNumber())
+                .collect(Collectors.toSet());
         this.parsersProvider = new WitsParsersProvider();
     }
 
@@ -33,35 +34,27 @@ public class PackageFilter implements Filter {
         return witsPackage;
     }
 
-    public void addPackageNumber(String packageNumber) {
-        this.packageNumbers.add(packageNumber);
+    public void addPackageNumber(WitsDescriptor descriptor) {
+        this.packageNumbers.add(descriptor.getPackageNumber());
     }
 
-    public void addPackageNumbers(String... packageNumbers) {
-        this.packageNumbers.addAll(Arrays.asList(packageNumbers));
+    public void addPackageNumbers(Set<WitsDescriptor> descriptors) {
+        this.packageNumbers.addAll(descriptors.stream().map(WitsDescriptor::getPackageNumber).collect(Collectors.toSet()));
     }
 
-    public void removePackageNumber(String packageNumber) {
-        this.packageNumbers.remove(packageNumber);
+    public void removePackageNumber(WitsDescriptor descriptor) {
+        this.packageNumbers.remove(descriptor.getPackageNumber());
     }
 
-    public void removePackageNumbers(String... packageNumbers) {
-        this.packageNumbers.removeAll(Arrays.asList(packageNumbers));
+    public void removePackageNumbers(Set<WitsDescriptor> descriptors) {
+        this.packageNumbers.removeAll(descriptors.stream().map(WitsDescriptor::getPackageNumber).collect(Collectors.toSet()));
     }
 
     public Set<String> getPackageNumbers() {
         return Collections.unmodifiableSet(packageNumbers);
     }
 
-    public void setPackageNumbers(Set<String> packageNumbers) {
-        this.packageNumbers = packageNumbers;
-    }
-
     public WitsParsersProvider getParsersProvider() {
         return parsersProvider;
-    }
-
-    public void setParsersProvider(WitsParsersProvider parsersProvider) {
-        this.parsersProvider = parsersProvider;
     }
 }
