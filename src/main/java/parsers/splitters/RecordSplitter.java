@@ -1,5 +1,7 @@
 package parsers.splitters;
 
+import exceptions.SplitException;
+
 public class RecordSplitter implements Splitter<String, String>{
     private int packageNumberLength;
     private int itemLength;
@@ -27,9 +29,9 @@ public class RecordSplitter implements Splitter<String, String>{
     }
 
     @Override
-    public String[] split(String data) {
+    public String[] split(String data) throws SplitException {
         if (data.length() < packageNumberLength + itemLength)
-            throw new IllegalArgumentException("Not enough record arguments: " + data);
+            throw new SplitException("Not enough record arguments: " + data);
         return new String[]{getPackageNumber(data), getItem(data), getValue(data)};
     }
 

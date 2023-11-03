@@ -1,6 +1,7 @@
 package validators;
 
 import descriptions.WitsDescriptor;
+import exceptions.SplitException;
 import exceptions.WitsValidationException;
 import parsers.splitters.RecordSplitter;
 import parsers.splitters.Splitter;
@@ -18,6 +19,7 @@ public abstract class RecordValidator extends WitsValidator {
     private Set<String> itemSet;
     private Splitter<String, String> recordSplitter;
 
+    @SuppressWarnings("unchecked cast")
     RecordValidator(Class<? extends WitsDescriptor> descriptorClass, RecordSplitter recordSplitter) {
         this.recordSplitter = recordSplitter;
         try {
@@ -34,7 +36,12 @@ public abstract class RecordValidator extends WitsValidator {
 
     @Override
     boolean isValidWits(String record) throws WitsValidationException {
-        String[] tokens = recordSplitter.split(record);
+        String[] tokens;
+        try {
+            tokens = recordSplitter.split(record);
+        } catch (SplitException e){
+            throw new WitsValidationException(e.getMessage());
+        }
         String packageNumber = tokens[0];
         String item = tokens[1];
         String value = tokens[2];

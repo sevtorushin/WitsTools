@@ -2,10 +2,8 @@ package parsers;
 
 import annotation.Item;
 import annotation.Package;
-import exceptions.WitsPackageException;
 import exceptions.WitsParseException;
 import parsers.splitters.PackageSplitter;
-import parsers.splitters.RecordSplitter;
 
 @Package(number = "08")
 public class MwdEvaluationParser extends WitsPackageParser {

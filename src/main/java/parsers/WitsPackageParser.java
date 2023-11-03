@@ -1,6 +1,7 @@
 package parsers;
 
 import annotation.Item;
+import exceptions.SplitException;
 import exceptions.WitsPackageException;
 import exceptions.WitsPackageParseException;
 import exceptions.WitsParseException;
@@ -31,7 +32,12 @@ public abstract class WitsPackageParser extends WitsParser<WitsPackageParser> {
         if (!validators.isValid(witsPackage))
             throw new WitsPackageParseException("Invalid package");
         container.clear();
-        String[] records = packageSplitter.split(witsPackage);
+        String[] records;
+        try {
+            records = packageSplitter.split(witsPackage);
+        } catch (SplitException e) {
+            throw new WitsPackageParseException(e.getMessage());
+        }
         for (int i = 1; i < records.length - 1; i++) {
             container.put(records[i]);
         }

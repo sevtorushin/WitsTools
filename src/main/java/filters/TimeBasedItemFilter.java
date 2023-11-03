@@ -1,5 +1,6 @@
 package filters;
 
+import descriptions.TimeBasedDescription;
 import exceptions.WitsParseException;
 import parsers.TimeBasedPackageParser;
 
@@ -10,8 +11,15 @@ public class TimeBasedItemFilter implements Filter{
     private Set<String> items;
     private TimeBasedPackageParser packageParser;
 
-    public TimeBasedItemFilter(String... items) {
-        this.items = new HashSet<>(Set.of(items));
+    public TimeBasedItemFilter(TimeBasedDescription... descriptors) {
+        this.items = new HashSet<>();
+        Arrays.stream(descriptors).forEach(description -> items.add(description.getItem()));
+        this.packageParser = new TimeBasedPackageParser();
+        packageParser.resetValidation();
+    }
+
+    public TimeBasedItemFilter() {
+        this.items = new HashSet<>(TimeBasedDescription.WELL_IDENTIFIER.getItemSet());
         this.packageParser = new TimeBasedPackageParser();
         packageParser.resetValidation();
     }

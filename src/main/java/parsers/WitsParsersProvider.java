@@ -1,6 +1,7 @@
 package parsers;
 
 import annotation.Package;
+import exceptions.SplitException;
 import org.reflections.Reflections;
 import parsers.splitters.PackageSplitter;
 import parsers.splitters.RecordSplitter;
@@ -32,7 +33,12 @@ public class WitsParsersProvider {
 
     public WitsParser<?> getParserForPackage(String witsPackage) {
         String recordOne = packageSplitter.split(witsPackage)[1];
-        String packageNumber = recordSplitter.split(recordOne)[0];
+        String packageNumber = null;
+        try {
+            packageNumber = recordSplitter.split(recordOne)[0];
+        } catch (SplitException e) {
+            e.printStackTrace();
+        }
         WitsParser<?> parser = parsers.get(packageNumber);
         if (parser == null)
             throw new NoSuchElementException("A suitable parser was not found");

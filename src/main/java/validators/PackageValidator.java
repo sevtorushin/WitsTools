@@ -1,5 +1,6 @@
 package validators;
 
+import exceptions.SplitException;
 import exceptions.WitsValidationException;
 import parsers.splitters.PackageSplitter;
 import parsers.splitters.Splitter;
@@ -18,7 +19,12 @@ public abstract class PackageValidator extends WitsValidator {
         if (!isWitsPackage(witsPackage))
             throw new WitsValidationException("Header (&&) or footer (!!) for specified package missing");
         boolean result = false;
-        String[] records = packageSplitter.split(witsPackage);
+        String[] records;
+        try {
+            records = packageSplitter.split(witsPackage);
+        } catch (SplitException e) {
+            throw new WitsValidationException(e.getMessage());
+        }
         for (int i = 1; i < records.length - 1; i++) {
             if (!recordValidator.isValid(records[i])) {
                 return false;
