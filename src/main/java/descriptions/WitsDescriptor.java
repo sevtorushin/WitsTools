@@ -3,6 +3,8 @@ package descriptions;
 import java.util.Set;
 
 public interface WitsDescriptor {
-    public String getPackageNumber();
-    public Set<String> getItemSet();
+    String getPackageNumber();
+    String getItem();
+    Set<String> getItemSet();
+    String getMnemonic();
 }
