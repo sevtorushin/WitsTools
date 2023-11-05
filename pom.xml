@@ -16,52 +16,16 @@
         <maven.compiler.version>11</maven.compiler.version>
         <maven.shade.plugin.version>3.2.1</maven.shade.plugin.version>
 
-        <!-- spring properties-->
-        <spring.core.version>5.3.20</spring.core.version>
-        <spring.context.version>5.3.20</spring.context.version>
-        <spring.beans.version>5.3.20</spring.beans.version>
-        <javax.annotation.api.version>1.3.2</javax.annotation.api.version>
-        <spring.expression.version>5.3.20</spring.expression.version>
-
         <!-- testing properties-->
         <junit.jupiter.api.version>5.9.3</junit.jupiter.api.version>
         <junit.jupiter.params.version>5.8.2</junit.jupiter.params.version>
+
+        <!-- reflection utils properties-->
+        <reflections.version>0.9.12</reflections.version>
     </properties>
 
 
     <dependencies>
-        <!-- spring dependencies -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.core.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.context.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-            <version>${spring.beans.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-expression</artifactId>
-            <version>${spring.expression.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <version>${javax.annotation.api.version}</version>
-        </dependency>
-
-
         <!-- testing dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -82,11 +46,8 @@
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
-            <version>0.9.12</version>
+            <version>${reflections.version}</version>
         </dependency>
-
-
-
 
     </dependencies>
 
